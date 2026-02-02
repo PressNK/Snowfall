@@ -5,7 +5,7 @@ riderModule.iml
 /_ReSharper.Caches/
 .idea
 Snowfall.sln.DotSettings.user
-dist/
+Snowfall.Web.Mvc/wwwrooot/dist
 
 # Node
 node_modules/
