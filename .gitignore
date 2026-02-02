@@ -4,6 +4,7 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea
+Snowfall.sln.DotSettings.user
 
 # Node
 node_modules/
