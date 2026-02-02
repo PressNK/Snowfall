@@ -5,6 +5,7 @@ riderModule.iml
 /_ReSharper.Caches/
 .idea
 Snowfall.sln.DotSettings.user
+dist/
 
 # Node
 node_modules/
