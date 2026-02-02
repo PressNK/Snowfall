@@ -1,0 +1,19 @@
+﻿@model Evenement
+
+<h2>@Model.Nom</h2>
+@if (Model.ImagePath != null)
+{
+    <img src="@Model.ImagePath" />
+}
+<p>@Model.Description</p>
+<ul>
+    <li>Date: @Model.Date.ToShortDateString()</li>
+    
+    @{
+        var classeBold = Model.Capacite > 1000 ? "fw-bold" : null;
+    }
+    <li class="@classeBold">Capacité: @Model.Capacite</li>
+    <li>Prix: @Model.Prix</li>
+</ul>
+
+<a asp-controller="Evenements" asp-action="Show" asp-route-id="@Model.Id">Détails</a>

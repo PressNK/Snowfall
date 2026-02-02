@@ -1,0 +1,12 @@
+﻿@model List<Evenement>;
+
+@{
+    ViewBag.Title = "Événements";
+}
+
+<h1>Évènements</h1>
+
+@foreach (Evenement evenement in Model)
+{
+    <partial name="_Evenement" model="evenement"/>
+}
