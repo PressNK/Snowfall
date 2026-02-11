@@ -11,9 +11,8 @@ public class SeedVilles : Migration
         {
             nom = "Vegas, NV",
             pays_iso = "US"
-        });
-        
-        Insert.IntoTable("villes").Row(new
+        })
+        .Row(new
         {
             nom = "Montreal, QC",
             pays_iso = "CA"
