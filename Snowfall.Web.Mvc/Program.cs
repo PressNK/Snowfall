@@ -1,4 +1,5 @@
 using Snowfall.Data.Configurations;
+using Snowfall.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -8,6 +9,12 @@ builder.Services.AddControllersWithViews();
 
 // Ajoute les migrations
 builder.Services.AddMigrations(configuration.GetConnectionString("AppDatabaseConnection")!);
+
+// Injection de dépendances
+builder.Services.AddScoped<IEvenementRepository, EvenementRepository>();
+
+// Dapper match underscores: nom_propriete_underscore <-> NomProprieteUnderscore
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var app = builder.Build();
 

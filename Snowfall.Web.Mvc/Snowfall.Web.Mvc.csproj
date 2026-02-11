@@ -8,6 +8,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Snowfall.Data\Snowfall.Data.csproj" />
+      <ProjectReference Include="..\Snowfall.Domain\Snowfall.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.1.66" />
+      <PackageReference Include="Npgsql" Version="10.0.1" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,8 @@
-﻿@model Evenement
+@model Evenement
+
+@{
+    ViewBag.Title = @Model.Nom;
+}
 
 <h2>@Model.Nom</h2>
 @if (Model.ImagePath != null)
@@ -14,6 +18,5 @@
     }
     <li class="@classeBold">Capacité: @Model.Capacite</li>
     <li>Prix: @Model.Prix</li>
+    <li>Ville: @Model.Ville.Nom</li>
 </ul>
-
-<a asp-controller="Evenements" asp-action="Show" asp-route-id="@Model.Id">Détails</a>

@@ -20,6 +20,7 @@ public class SeedEvenements : Migration
             prix = 30.00,
             capacite = 4000,
             date = new DateTime(2025, 2, 7),
+            image_path = "lol.png",
             ville_id = (int) Villes.Vegas,
         })
         .Row(new
@@ -29,6 +30,7 @@ public class SeedEvenements : Migration
             prix = 30.00,
             capacite = 1000,
             date = new DateTime(2026, 1, 7),
+            image_path = "CS-go.jpg",
             ville_id = (int) Villes.Montreal,
         });
     }

@@ -1,50 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Snowfall.Web.Mvc.Models;
+using Snowfall.Data.Repositories;
+using Snowfall.Domain.Models;
 
 namespace Snowfall.Web.Mvc.Controllers;
 
 [Route("[controller]")]
 public class EvenementsController : Controller
 {
-    [Route("/")]
-    public IActionResult Index()
+    private IEvenementRepository _evenementRepository;
+
+    public EvenementsController(IEvenementRepository evenementRepository)
     {
-        List<Evenement> evenements = new List<Evenement>()
-        {
-            new Evenement()
-            {
-                Id = 1,
-                Nom = "Super Duper Évènement LoL",
-                Description = "Compétition de League of Legends.",
-                Capacite = 1400, // 1400 personnes
-                Date = DateTime.Now + TimeSpan.FromDays(30), // dans 30 jours
-                Prix = new decimal(49.00), // 49$ l'inscription, en decimal
-                Ville = "Montreal, CA",
-            },
-            new Evenement()
-            {
-                Id = 2,
-                Nom = "Super Duper Évènement Space Quest 6 Roger Wilco",
-                Description = "À quoi ressemblerait une compétition de Space Quest 6 est un mystère.",
-                Capacite = 50, // 1400 personnes
-                Date = DateTime.Now + TimeSpan.FromDays(60), // dans 60 jours
-                Prix = new decimal(29.00), // 29$ l'inscription, en decimal
-                Ville = "Los Angeles, US",
-                ImagePath = "https://placehold.co/600x400",
-            },
-        };
+        _evenementRepository = evenementRepository;
+    }
+
+    [Route("/")]
+    public async Task<IActionResult> Index()
+    {
+        List<Evenement> evenements = await _evenementRepository.GetAll();
         return View(evenements);
     }
 
     [HttpGet("{id:int}")]
-    public IActionResult Show(int id, string? option)
+    public async Task<IActionResult> Show(int id, string? option)
     {
-        return Content($"Vue Show de EvenementsController, id: {id}, option: {option}");
+        var evenement = await _evenementRepository.FindById(id);
+
+        if (evenement == null) return NotFound();
+
+        return View(evenement);
     }
-    
+
     [HttpGet("{id:int}/edit")]
     public IActionResult Edit(int id)
     {
-        return Content($"Vue Edit de EvenementsController, id: {id}");
+        return Content("Vue Edit de EvenementsController, id: " + id);
     }
 }
