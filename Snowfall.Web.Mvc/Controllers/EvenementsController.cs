@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Snowfall.Application.Services;
 using Snowfall.Data.Repositories;
 using Snowfall.Domain.Models;
 
@@ -7,24 +8,24 @@ namespace Snowfall.Web.Mvc.Controllers;
 [Route("[controller]")]
 public class EvenementsController : Controller
 {
-    private IEvenementRepository _evenementRepository;
+    private IEvenementService _evenementService;
 
-    public EvenementsController(IEvenementRepository evenementRepository)
+    public EvenementsController(IEvenementService evenementService)
     {
-        _evenementRepository = evenementRepository;
+        _evenementService = evenementService;
     }
 
     [Route("/")]
     public async Task<IActionResult> Index()
     {
-        List<Evenement> evenements = await _evenementRepository.GetAll();
+        List<Evenement> evenements = await _evenementService.GetAll();
         return View(evenements);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> Show(int id, string? option)
     {
-        var evenement = await _evenementRepository.FindById(id);
+        var evenement = await _evenementService.FindById(id);
 
         if (evenement == null) return NotFound();
 

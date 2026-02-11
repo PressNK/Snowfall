@@ -2,19 +2,18 @@
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using Snowfall.Data.Context;
 using Snowfall.Domain.Models;
 
 namespace Snowfall.Data.Repositories;
 
 public class EvenementRepository : IEvenementRepository
 {
-    private IConfiguration _configuration;
-    private string? _connectionString;
+    private DapperContext _dbContext;
     
-    public EvenementRepository(IConfiguration configuration)
+    public EvenementRepository(DapperContext dbContext)
     {
-        _configuration = configuration;
-        _connectionString = _configuration.GetConnectionString("AppDatabaseConnection");
+        _dbContext = dbContext;
     }
     
     public async Task<List<Evenement>> GetAll()
@@ -23,7 +22,7 @@ public class EvenementRepository : IEvenementRepository
             SELECT * from evenements;
         ";
 
-        using (IDbConnection connection = new NpgsqlConnection(_connectionString))
+        using (IDbConnection connection = _dbContext.CreateConnection())
         {
             IEnumerable<Evenement> evenements = await connection.QueryAsync<Evenement>(sql);
             return evenements.ToList();
@@ -38,12 +37,12 @@ public class EvenementRepository : IEvenementRepository
             INNER JOIN villes v ON e.Ville_Id = v.Id
             WHERE e.id = @Id;
         ";
-
-        using (IDbConnection connection = new NpgsqlConnection(_connectionString))
+        using (IDbConnection connection = _dbContext.CreateConnection())
         {
             var evenements = await connection.QueryAsync<Evenement, Ville, Evenement>(
-                sql, 
-                (evenement, ville) => {
+                sql,
+                (evenement, ville) =>
+                {
                     evenement.Ville = ville; // On lie manuellement la ville à l'événement
                     return evenement;
                 },
