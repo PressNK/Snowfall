@@ -1,4 +1,4 @@
-﻿@model List<Evenement>;
+﻿@model EvenementsIndexViewModel;
 
 @{
     ViewBag.Title = "Événements";
@@ -6,7 +6,16 @@
 
 <h1>Évènements</h1>
 
-@foreach (Evenement evenement in @Model)
-{
-    <partial name="_Evenement" model="evenement"/>
-}
+<div class="row">
+    <div class="col-lg-3 mb-4">
+        <partial name="_Filtres" model="Model.FiltresEvenements" />
+    </div>
+    <div class="col-lg-9">
+        <div class="row">
+            @foreach (Evenement evenement in Model.Evenements)
+            {
+                <partial name="_Evenement" model="evenement"/>
+            }
+        </div>
+    </div>
+</div>

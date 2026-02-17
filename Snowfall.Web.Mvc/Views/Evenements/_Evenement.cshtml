@@ -1,19 +1,27 @@
 ﻿@model Evenement
 
-<h2>@Model.Nom</h2>
-@if (Model.ImagePath != null)
-{
-    <img src="~/images/evenements/@Model.ImagePath" alt="Image d'événement" />
-}
-<p>@Model.Description</p>
-<ul>
-    <li>Date: @Model.Date.ToShortDateString()</li>
-    
-    @{
-        var classeBold = Model.Capacite > 1000 ? "fw-bold" : null;
-    }
-    <li class="@classeBold">Capacité: @Model.Capacite</li>
-    <li>Prix: @Model.Prix</li>
-</ul>
-
-<a asp-controller="Evenements" asp-action="Show" asp-route-id="@Model.Id">Détails</a>
+<div class="col-md-6 col-lg-4 mb-4">
+    <div class="card h-100">
+        @if (@Model.ImagePath != null)
+        {
+            <img class="card-evenement img-fluid rounded-top object-fit-cover" src="~/images/evenements/@Model.ImagePath"/>
+        }
+        <div class="card-body">
+            <h5 class="card-title">@Model.Nom</h5>
+            <p class="card-text">@Model.Description</p>
+            <p class="card-text">@Model.Prix$</p>
+            <p class="card-text">
+                <small class="text-muted">@Model.Date.ToShortDateString() - @Model.Capacite places</small>
+            </p>
+            <p class="card-text"><span class="badge text-bg-light">@Model.Ville!.Nom, @Model.Ville!.PaysIso</span></p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary"
+               asp-controller="Evenements"
+               asp-action="Show"
+               asp-route-id="@Model.Id">
+                Détails
+            </a>
+        </div>
+    </div>
+</div>

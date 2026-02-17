@@ -21,4 +21,9 @@ public class EvenementService : IEvenementService
     {
         return await _evenementRepository.FindById(id);
     }
+    
+    public async Task<List<Evenement>> FindByVilleId(int villeId)
+    {
+        return await _evenementRepository.FindByVilleId(villeId);
+    }
 }

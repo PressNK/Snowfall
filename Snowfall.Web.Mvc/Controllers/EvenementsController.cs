@@ -2,6 +2,7 @@
 using Snowfall.Application.Services;
 using Snowfall.Data.Repositories;
 using Snowfall.Domain.Models;
+using Snowfall.Web.Mvc.Models.Evenements;
 
 namespace Snowfall.Web.Mvc.Controllers;
 
@@ -9,17 +10,30 @@ namespace Snowfall.Web.Mvc.Controllers;
 public class EvenementsController : Controller
 {
     private IEvenementService _evenementService;
+    private IVilleService _villeService;
 
-    public EvenementsController(IEvenementService evenementService)
+    public EvenementsController(IEvenementService evenementService, IVilleService villeService)
     {
         _evenementService = evenementService;
+        _villeService = villeService;
     }
 
     [Route("/")]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int? ville)
     {
-        List<Evenement> evenements = await _evenementService.GetAll();
-        return View(evenements);
+        List<Evenement> evenements = ville.HasValue ? await _evenementService.FindByVilleId(ville.Value) 
+            : await _evenementService.GetAll();
+        List<Ville> villes = await _villeService.GetAll();
+        var viewModel = new EvenementsIndexViewModel
+        {
+            Evenements = evenements,
+            FiltresEvenements = new FiltresEvenementsViewModel()
+            {
+                Villes = villes,
+                SelectedVilleId = ville
+            }
+        };
+        return View(viewModel);
     }
 
     [HttpGet("{id:int}")]

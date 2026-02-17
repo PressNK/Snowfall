@@ -1,0 +1,20 @@
+﻿@model FiltresEvenementsViewModel
+
+<form method="get" asp-controller="Evenements" asp-action="Index">
+    <h6 class="text-uppercase">Filtrer par ville</h6>
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-action">
+            <input class="form-check-input me-1" type="radio" name="ville" id="ville_all" checked="@(Model.SelectedVilleId == null ? "checked" : null)"/>
+            <label class="form-check-label" for="ville_all">Tous les évènements</label>
+        </li>    
+        @foreach (Ville ville in Model.Villes)
+        {
+            <li class="list-group-item list-group-item-action">
+                <input class="form-check-input me-1" type="radio" name="ville" value="@ville.Id" id="ville_@ville.Id" checked="@(Model.SelectedVilleId == ville.Id ? "checked" : null)"/>
+                <label class="form-check-label" for="ville_@ville.Id">@ville.Nom, @ville.PaysIso</label>
+            </li>
+        }
+    </ul>
+    
+    <button type="submit" class="btn btn-primary">Appliquer le filtre</button>
+</form>

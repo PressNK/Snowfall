@@ -14,8 +14,10 @@ builder.Services.AddMigrations(configuration.GetConnectionString("AppDatabaseCon
 
 // Injection de dépendances
 builder.Services.AddScoped<IEvenementRepository, EvenementRepository>();
+builder.Services.AddScoped<IVilleRepository, VilleRepository>();
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IEvenementService, EvenementService>();
+builder.Services.AddScoped<IVilleService, VilleService>();
 
 // Dapper match underscores: nom_propriete_underscore <-> NomProprieteUnderscore
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
