@@ -23,5 +23,14 @@
         </ul>
         
         <span class="badge text-bg-light">@Model.Ville!.Nom, @Model.Ville!.PaysIso</span>
+        
+        <form asp-controller="Panier" asp-action="Create">
+            <input type="hidden" name="itemId" value="@Model.Id" />
+            <div class="mb-3">
+                <label for="quantite" class="form-label">Quantité</label>
+                <input type="number" class="form-control" name="quantite" id="quantite" value="1" min="1" max="@Model.Capacite" />
+            </div>
+            <button class="btn btn-primary mt-5">Acheter un billet</button>
+        </form>
     </div>
 </div>

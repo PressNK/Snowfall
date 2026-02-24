@@ -1,0 +1,25 @@
+﻿@model PanierItemViewModel
+
+@if (Model?.Evenement != null)
+{
+    <div class="card mb-3">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="card-title mb-1">@Model.Evenement.Nom</h5>
+                <small class="text-muted">@Model.Evenement.Date.ToShortDateString() — @Model.Evenement.Ville!.Nom</small>
+            </div>
+            <div class="text-center">
+                <p class="mb-0 text-muted"><small>Quantité</small></p>
+                <span class="badge text-bg-secondary">@Model.Quantite</span>
+            </div>
+            <div class="text-end">
+                <p class="mb-0 text-muted"><small>@Model.Evenement.Prix $ / unité</small></p>
+                <p class="mb-0 fw-bold">@(Model.Quantite * Model.Evenement.Prix) $</p>
+                <form asp-controller="Panier" asp-action="DeleteItem" method="post" class="mt-2">
+                    <input type="hidden" name="itemId" value="@Model.ItemId" />
+                    <button class="btn btn-danger btn-sm">Retirer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}

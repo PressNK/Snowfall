@@ -1,4 +1,6 @@
-﻿@model Evenement
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model Evenement
+@inject IHtmlLocalizer<SharedResources> HtmlLocalizer
 
 <div class="col-md-6 col-lg-4 mb-4">
     <div class="card h-100">
@@ -20,7 +22,7 @@
                asp-controller="Evenements"
                asp-action="Show"
                asp-route-id="@Model.Id">
-                Détails
+                @HtmlLocalizer["Bouton_details"]
             </a>
         </div>
     </div>

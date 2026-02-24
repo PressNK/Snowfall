@@ -3,3 +3,17 @@ $primary: green;
 .card-evenement {
   height: 11rem;
 }
+
+body {
+  min-height: 98vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+}
+
+.input-validation-error {
+  @extend .is-invalid;
+}

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Snowfall.Application.Services;
-using Snowfall.Data.Repositories;
 using Snowfall.Domain.Models;
 using Snowfall.Web.Mvc.Models.Evenements;
 
@@ -21,7 +20,8 @@ public class EvenementsController : Controller
     [Route("/")]
     public async Task<IActionResult> Index(int? ville)
     {
-        List<Evenement> evenements = ville.HasValue ? await _evenementService.FindByVilleId(ville.Value) 
+        List<Evenement> evenements = ville.HasValue
+            ? await _evenementService.FindByVilleId(ville.Value)
             : await _evenementService.GetAll();
         List<Ville> villes = await _villeService.GetAll();
         var viewModel = new EvenementsIndexViewModel

@@ -1,0 +1,16 @@
+﻿@model List<PanierItemViewModel>
+
+@{
+    ViewBag.Title = "Panier";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@foreach(PanierItemViewModel panierItem in Model ?? [])
+{
+    <partial name="_PanierItem" model="panierItem"/>
+}
+
+<form asp-controller="Panier" asp-action="Delete">
+    <button class="btn btn-primary mt-5">Vider le panier</button>
+</form>

@@ -34,6 +34,35 @@
                         <a class="nav-link @(controller == "Evenements" && action == "Index" ? "active" : "")" asp-area="" asp-controller="" asp-action="">Accueil</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav">
+                    @if (Context.Session.GetString("panier") != null)
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="Panier" asp-action="Index" class="btn btn-outline-secondary">
+                                Panier
+                            </a>
+                        </li>
+                    }
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <form asp-controller="Auth" asp-action="Deconnexion">
+                                <button class="btn btn-link nav-link">Déconnexion</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a
+                                class="nav-link @(controller == "Auth" ? "active" : String.Empty)"
+                                asp-controller="Auth"
+                                asp-action="Connexion">
+                                Connexion
+                            </a>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </nav>

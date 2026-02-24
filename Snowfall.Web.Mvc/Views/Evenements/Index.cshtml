@@ -1,10 +1,12 @@
-﻿@model EvenementsIndexViewModel;
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model EvenementsIndexViewModel;
+@inject IViewLocalizer ViewLocalizer
 
 @{
-    ViewBag.Title = "Événements";
+    ViewBag.Title = ViewLocalizer["Titre"];
 }
 
-<h1>Évènements</h1>
+<h1>@ViewBag.Title</h1>
 
 <div class="row">
     <div class="col-lg-3 mb-4">
