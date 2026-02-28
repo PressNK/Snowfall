@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Snowfall.Application.Claims;
 using Snowfall.Application.Services;
 using Snowfall.Data.Configurations;
 using Snowfall.Data.Context;
@@ -31,7 +32,9 @@ builder.Services.AddScoped<IRoleStore<ApplicationRole>, RoleRepository>();
 builder.Services.AddScoped<IUserStore<ApplicationUser>, UserRepository>();
 
 // Identity
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>();
+builder.Services
+    .AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddClaimsPrincipalFactory<ApplicationClaimsPrincipalFactory>();;
 
 // Dapper match underscores: nom_propriete_underscore <-> NomProprieteUnderscore
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
