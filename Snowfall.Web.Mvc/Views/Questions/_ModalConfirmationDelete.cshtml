@@ -1,0 +1,25 @@
+﻿@model Question
+
+<div class="modal" id="app-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Supprimer la question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous certain de vouloir supprimer cette question?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form class="card-link d-inline" asp-controller="Questions"
+                      asp-action="Delete"
+                      asp-route-id="@Model.Id"
+                      asp-route-evenementId="@Model.EvenementId">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

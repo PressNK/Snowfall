@@ -5,3 +5,6 @@ import '../scss/app.scss'
 
 // Importation du JavaScript de Bootstrap
 import * as bootstrap from 'bootstrap'
+import htmx from 'htmx.org';
+import './flash-message';
+import './modal';

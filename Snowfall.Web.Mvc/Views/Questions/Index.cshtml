@@ -1,0 +1,18 @@
+﻿@model QuestionsIndexViewModel
+
+@{
+    ViewBag.Title = "Vos Questions";
+}
+
+<h2>Vos questions pour l'évémement @Model.Evenement.Nom</h2>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        @foreach (Question question in Model.Questions)
+        {
+            <partial name="_Question" model="question"/>
+        }
+    </div> 
+</div>
+
+

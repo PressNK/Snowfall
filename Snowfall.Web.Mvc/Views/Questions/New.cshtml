@@ -1,0 +1,30 @@
+﻿@model CreerQuestionViewModel
+
+@{
+    ViewBag.Title = "Poser une question";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h1>@ViewBag.Title</h1>
+        
+        <div class="mb-3">
+            Déjà posé une question? 
+            <a asp-controller="Questions"
+               asp-action="Index"
+               asp-route-evenementId="@Model.EvenementId">Voir vos questions pour cet événement</a>.
+        </div>
+        
+        <form asp-controller="Questions"
+              asp-action="Create"
+              asp-route-evenementId="@Model.EvenementId">
+            <input type="hidden" asp-for="EvenementId"/>
+            <div class="mb-3">
+                <textarea asp-for="Contenu" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Contenu" class="invalid-feedback"></span>
+            </div>
+            <button class="btn btn-primary">Soumettre</button>
+        </form>
+
+    </div>
+</div>

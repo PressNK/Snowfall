@@ -1,0 +1,30 @@
+﻿@model Question
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p class="card-text" style="white-space: pre-line">@Model.Contenu</p>
+        <a class="card-link small"
+           asp-controller="Questions"
+           asp-action="Edit"
+           asp-route-evenementId="@Model.EvenementId"
+           asp-route-id="@Model.Id">Modifier</a>
+        
+        <a class="card-link link-danger small"
+           href="#"
+           hx-get
+           hx-controller="Questions"
+           hx-action="ConfirmationDelete"
+           hx-route-evenementId="@Model.EvenementId"
+           hx-route-id="@Model.Id"
+           hx-target="#app-modal-manager"
+           hx-trigger="click">Supprimer</a>
+        
+        <small class="text-muted">
+            Créée le @Model.CreatedAt.ToShortDateString()
+            @if (Model.UpdatedAt != Model.CreatedAt)
+            {
+                <span>(modifié le @Model.UpdatedAt.ToShortDateString())</span>
+            }
+        </small>
+    </div>
+</div>

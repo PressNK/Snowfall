@@ -1,7 +1,5 @@
 ﻿using System.Data;
 using Dapper;
-using Microsoft.Extensions.Configuration;
-using Npgsql;
 using Snowfall.Data.Context;
 using Snowfall.Domain.Models;
 
@@ -10,12 +8,12 @@ namespace Snowfall.Data.Repositories;
 public class EvenementRepository : IEvenementRepository
 {
     private DapperContext _dbContext;
-    
+
     public EvenementRepository(DapperContext dbContext)
     {
         _dbContext = dbContext;
     }
-    
+
     public async Task<List<Evenement>> GetAll()
     {
         string sql = @"
@@ -51,7 +49,7 @@ public class EvenementRepository : IEvenementRepository
                 {
                     evenement.Ville = ville; // On lie manuellement la ville à l'événement
                     return evenement;
-                },new { Id = id });
+                }, new { Id = id });
 
             // Comme Query retourne une liste, on récupère le premier élément
             var resultat = evenements.FirstOrDefault();
@@ -59,7 +57,7 @@ public class EvenementRepository : IEvenementRepository
             return resultat;
         }
     }
-    
+
     public async Task<List<Evenement>> FindByVilleId(int villeId)
     {
         string sql = @"
@@ -76,7 +74,7 @@ public class EvenementRepository : IEvenementRepository
                 {
                     evenement.Ville = ville; // On lie manuellement la ville à l'événement
                     return evenement;
-                },new { Id = villeId });
+                }, new { Id = villeId });
 
             return evenements.ToList();
         }

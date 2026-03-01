@@ -75,6 +75,7 @@
 </header>
 <div class="container">
     <main role="main" class="pb-3">
+        <partial name="_FlashMessage"/>
         @RenderBody()
     </main>
 </div>
@@ -84,7 +85,7 @@
         &copy; 2026 - Snowfall
     </div>
 </footer>
-
+<div id="app-modal-manager"></div>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

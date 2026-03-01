@@ -1,0 +1,30 @@
+﻿@model ModifierQuestionViewModel
+
+@{
+    ViewBag.Title = "Modifier la question";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h1>@ViewBag.Title</h1>
+
+        <form asp-controller="Questions"
+              asp-action="Update"
+              asp-route-evenementId="@Model.EvenementId"
+              asp-route-id="@Model.Id">
+            
+            <input type="hidden" name="_method" value="PATCH"/>
+            <input type="hidden" asp-for="EvenementId"/>
+
+            <div class="mb-3">
+                <textarea asp-for="Contenu" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Contenu" class="invalid-feedback"></span>
+            </div>
+
+            <button class="btn btn-primary">Soumettre</button>
+        </form>
+
+    </div>
+</div>

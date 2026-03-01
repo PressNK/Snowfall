@@ -25,9 +25,11 @@ builder.Services.AddMigrations(configuration.GetConnectionString("AppDatabaseCon
 // Injection de dépendances
 builder.Services.AddScoped<IEvenementRepository, EvenementRepository>();
 builder.Services.AddScoped<IVilleRepository, VilleRepository>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IEvenementService, EvenementService>();
 builder.Services.AddScoped<IVilleService, VilleService>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IRoleStore<ApplicationRole>, RoleRepository>();
 builder.Services.AddScoped<IUserStore<ApplicationUser>, UserRepository>();
 
@@ -53,6 +55,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+// permets les méthodes PUT/PATCH/DELETE dans les formulaires. À mettre avant UseRouting()!
+app.UseHttpMethodOverride(new() { FormFieldName = "_method" });
 app.UseRouting();
 app.UseSession();
 
