@@ -42,6 +42,7 @@ public class ComptesController : Controller
 
             if (inscriptionResult.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, "UTILISATEUR");
                 var connexionResult = await _signInManager.PasswordSignInAsync(
                     inscriptionViewModel.Email!,
                     inscriptionViewModel.Password!,
