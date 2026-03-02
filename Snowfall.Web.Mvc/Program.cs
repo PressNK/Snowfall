@@ -43,6 +43,7 @@ Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var app = builder.Build();
 
+
 app.Services.MigrateDown();
 app.Services.MigrateUp();
 
@@ -58,6 +59,16 @@ app.UseHttpsRedirection();
 // permets les méthodes PUT/PATCH/DELETE dans les formulaires. À mettre avant UseRouting()!
 app.UseHttpMethodOverride(new() { FormFieldName = "_method" });
 app.UseRouting();
+
+var supportedCultures = new[] { "fr", "en" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture("fr")
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+localizationOptions.RequestCultureProviders.Clear();
+app.UseRequestLocalization(localizationOptions);
+
 app.UseSession();
 
 app.UseAuthorization();

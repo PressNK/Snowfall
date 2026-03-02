@@ -1,0 +1,59 @@
+﻿@model InscriptionViewModel
+
+@{
+    ViewBag.Title = "Créer un compte";
+}
+
+@if (Html.ViewData.ModelState["Inscription.Echec"]?.Errors.Count > 0)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationMessage("Inscription.Echec")
+    </div>
+}
+
+@if (Html.ViewData.ModelState["Inscription.RequiresNonAlphanumeric"]?.Errors.Count > 0)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationMessage("Inscription.RequiresNonAlphanumeric")
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h1 class="mb-3">Créer un compte</h1>
+        
+        <form asp-controller="Comptes" asp-action="Create">
+            <div class="form-floating mb-3">
+                <input asp-for="Prenom" class="form-control"/>
+                <label asp-for="Prenom"></label>
+                <span asp-validation-for="Prenom" class="invalid-feedback"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Nom" class="form-control" />
+                <label asp-for="Nom"></label>
+                <span asp-validation-for="Nom" class="invalid-feedback"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Email" class="form-control" />
+                <label asp-for="Email"></label>
+                <span asp-validation-for="Email" class="invalid-feedback"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Password" class="form-control" />
+                <label asp-for="Password"></label>
+                <span asp-validation-for="Password" class="invalid-feedback"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <label asp-for="ConfirmPassword"></label>
+                <span asp-validation-for="ConfirmPassword" class="invalid-feedback"></span>
+            </div>
+
+            <button class="btn btn-primary">S'inscrire</button>
+        </form>
+        
+    </div>
+</div>

@@ -1,4 +1,4 @@
-﻿<root>
+<root>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -11,16 +11,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="Email_Invalid" xml:space="preserve">
-        <value>Please enter a valid email.</value>
+    <data name="Inscription.Echec" xml:space="preserve">
+        <value>Registration failed. Please check the entered data.</value>
     </data>
-    <data name="Email_Required" xml:space="preserve">
-        <value>The email field is required.</value>
-    </data>
-    <data name="Password_Length" xml:space="preserve">
-        <value>The password must be between {2} and {1} characters.</value>
-    </data>
-    <data name="Password_Required" xml:space="preserve">
-        <value>The password is required.</value>
+    <data name="Inscription.RequiresNonAlphanumeric" xml:space="preserve">
+        <value>Passwords must have at least one non alphanumeric character.</value>
     </data>
 </root>

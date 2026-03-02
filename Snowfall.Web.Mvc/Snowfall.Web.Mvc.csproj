@@ -39,6 +39,14 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>ConnexionViewModel.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Models\Comptes\InscriptionViewModel.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>InscriptionViewModel.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Controllers\ComptesController.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ComptesController.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -66,6 +74,16 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>ConnexionViewModel.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Models\Comptes\InscriptionViewModel.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>InscriptionViewModel.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Controllers\ComptesController.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ComptesController.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 
