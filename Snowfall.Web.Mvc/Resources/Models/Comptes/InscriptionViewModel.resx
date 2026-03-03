@@ -39,4 +39,19 @@
     <data name="Passwords_NoMatch" xml:space="preserve">
         <value>Les mots de passes ne sont pas pareil.</value>
     </data>
+    <data name="Adresse_Required" xml:space="preserve">
+        <value>L'adresse est requise.</value>
+    </data>
+    <data name="CodePostal_Required" xml:space="preserve">
+        <value>Le code postal est requis.</value>
+    </data>
+    <data name="Pays_Required" xml:space="preserve">
+        <value>Le pays est requis.</value>
+    </data>
+    <data name="Province_Required" xml:space="preserve">
+        <value>La province est requise.</value>
+    </data>
+    <data name="Ville_Required" xml:space="preserve">
+        <value>La ville est requise.</value>
+    </data>
 </root>

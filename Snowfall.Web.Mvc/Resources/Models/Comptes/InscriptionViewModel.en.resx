@@ -32,4 +32,19 @@
     <data name="Passwords_NoMatch" xml:space="preserve">
         <value>Passwords don't match.</value>
     </data>
+    <data name="Adresse_Required" xml:space="preserve">
+        <value>Address is required.</value>
+    </data>
+    <data name="CodePostal_Required" xml:space="preserve">
+        <value>PIN code required.</value>
+    </data>
+    <data name="Pays_Required" xml:space="preserve">
+        <value>Country is required</value>
+    </data>
+    <data name="Province_Required" xml:space="preserve">
+        <value>State is required.</value>
+    </data>
+    <data name="Ville_Required" xml:space="preserve">
+        <value>City is required</value>
+    </data>
 </root>

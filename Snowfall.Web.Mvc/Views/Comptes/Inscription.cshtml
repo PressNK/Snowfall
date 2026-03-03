@@ -23,18 +23,63 @@
         <h1 class="mb-3">Créer un compte</h1>
         
         <form asp-controller="Comptes" asp-action="Create">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input asp-for="Prenom" class="form-control"/>
+                        <label asp-for="Prenom"></label>
+                        <span asp-validation-for="Prenom" class="invalid-feedback"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input asp-for="Nom" class="form-control" />
+                        <label asp-for="Nom"></label>
+                        <span asp-validation-for="Nom" class="invalid-feedback"></span>
+                    </div>
+                </div>
+            </div>
+            
             <div class="form-floating mb-3">
-                <input asp-for="Prenom" class="form-control"/>
-                <label asp-for="Prenom"></label>
-                <span asp-validation-for="Prenom" class="invalid-feedback"></span>
+                <input asp-for="Adresse" class="form-control" />
+                <label asp-for="Adresse"></label>
+                <span asp-validation-for="Adresse" class="invalid-feedback"></span>
             </div>
 
-            <div class="form-floating mb-3">
-                <input asp-for="Nom" class="form-control" />
-                <label asp-for="Nom"></label>
-                <span asp-validation-for="Nom" class="invalid-feedback"></span>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input asp-for="Ville" class="form-control" />
+                        <label asp-for="Ville"></label>
+                        <span asp-validation-for="Ville" class="invalid-feedback"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input asp-for="CodePostal" class="form-control" />
+                        <label asp-for="CodePostal"></label>
+                        <span asp-validation-for="CodePostal" class="invalid-feedback"></span>
+                    </div>
+                </div>
             </div>
 
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input asp-for="Province" class="form-control" />
+                        <label asp-for="Province"></label>
+                        <span asp-validation-for="Province" class="invalid-feedback"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input asp-for="Pays" class="form-control" />
+                        <label asp-for="Pays"></label>
+                        <span asp-validation-for="Pays" class="invalid-feedback"></span>
+                    </div>
+                </div>
+            </div>
+            
             <div class="form-floating mb-3">
                 <input asp-for="Email" class="form-control" />
                 <label asp-for="Email"></label>

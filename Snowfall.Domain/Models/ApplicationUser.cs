@@ -13,5 +13,6 @@ public class ApplicationUser
     #region Propriétés personnalisées
     public required string Prenom { get; set; }
     public required string Nom { get; set; }
+    public InformationClient? InformationClient { get; set; }
     #endregion
 }

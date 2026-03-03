@@ -21,13 +21,43 @@ public class UserRepository : IUserRoleStore<ApplicationUser>, IUserEmailStore<A
         
         using (var connection = _dbContext.CreateConnection())
         {
-            string sql = @"
-                INSERT INTO application_users (username, normalized_username, email,
-                normalized_email, email_confirmed, password_hash, prenom, nom)
-                VALUES (@UserName, @NormalizedUserName, @Email, @NormalizedEmail, @EmailConfirmed, @PasswordHash, @Prenom, @Nom)
-                RETURNING id";
-            
-            user.Id = await connection.QuerySingleAsync<string>(sql, user);
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    string sql = @"
+                    INSERT INTO application_users (username, normalized_username, email,
+                    normalized_email, email_confirmed, password_hash, prenom, nom)
+                    VALUES (@UserName, @NormalizedUserName, @Email, @NormalizedEmail, @EmailConfirmed, @PasswordHash, @Prenom, @Nom)
+                    RETURNING id";
+                
+                    user.Id = await connection.QuerySingleAsync<string>(sql, user, transaction: transaction);
+                
+                    var informationClient = user.InformationClient;
+                    if (informationClient != null)
+                    {
+                        sql = @"
+                        INSERT INTO informations_client (utilisateur_id, adresse, ville, code_postal, province, pays)
+                        VALUES (@UtilisateurId, @Adresse, @Ville, @CodePostal, @Province, @Pays)
+                        RETURNING id";
+
+                        informationClient.UtilisateurId = user.Id;
+                        informationClient.Id =
+                            await connection.QuerySingleAsync<int>(sql, informationClient, transaction: transaction);
+                    }
+                
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return IdentityResult.Failed(new IdentityError()
+                    {
+                        Code = "500",
+                        Description = e.Message                        
+                    });
+                }
+            }
         }
 
         return IdentityResult.Success;

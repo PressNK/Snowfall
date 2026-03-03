@@ -41,8 +41,8 @@ public class SeedUtilisateurs : Migration
         
         Insert.IntoTable("informations_client").Row(new
         {
-            id = 1,
-            user_id = utilisateurGuid,
+            utilisateur_id = utilisateurGuid,
+            adresse = "123 rue des Lilas",
             ville = "Beloeil",
             code_postal = "HOH OHO",
             province = "Québec",

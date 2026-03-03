@@ -33,10 +33,18 @@ public class ComptesController : Controller
         {
             var user = new ApplicationUser()
             {
-                Email = inscriptionViewModel.Email!,
-                Nom = inscriptionViewModel.Nom!,
-                Prenom = inscriptionViewModel.Prenom!,
-                UserName = inscriptionViewModel.Email!,
+                Email = inscriptionViewModel.Email,
+                Nom = inscriptionViewModel.Nom,
+                Prenom = inscriptionViewModel.Prenom,
+                UserName = inscriptionViewModel.Email,
+                InformationClient = new InformationClient
+                {
+                    Adresse = inscriptionViewModel.Adresse,
+                    Pays =  inscriptionViewModel.Pays,
+                    CodePostal = inscriptionViewModel.CodePostal,
+                    Ville = inscriptionViewModel.Ville,
+                    Province = inscriptionViewModel.Province,
+                }
             };
             var inscriptionResult = await _userManager.CreateAsync(user, inscriptionViewModel.Password!);
 
@@ -49,7 +57,7 @@ public class ComptesController : Controller
                     true,
                     lockoutOnFailure: false
                 );
-                
+
                 if (connexionResult.Succeeded)
                     return RedirectToAction("Index", "Evenements");
             }

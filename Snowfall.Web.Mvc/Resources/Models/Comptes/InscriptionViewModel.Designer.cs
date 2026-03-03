@@ -60,6 +60,24 @@ namespace Snowfall.Web.Mvc.Resources.Models.Auth {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to L&apos;adresse est requise..
+        /// </summary>
+        internal static string Adresse_Required {
+            get {
+                return ResourceManager.GetString("Adresse_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Le code postal est requis..
+        /// </summary>
+        internal static string CodePostal_Required {
+            get {
+                return ResourceManager.GetString("CodePostal_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Veuillez entrer un courriel valide..
         /// </summary>
         internal static string Email_Invalid {
@@ -114,11 +132,38 @@ namespace Snowfall.Web.Mvc.Resources.Models.Auth {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Le pays est requis..
+        /// </summary>
+        internal static string Pays_Required {
+            get {
+                return ResourceManager.GetString("Pays_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Le prenom est requis..
         /// </summary>
         internal static string Prenom_Required {
             get {
                 return ResourceManager.GetString("Prenom_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La province est requise..
+        /// </summary>
+        internal static string Province_Required {
+            get {
+                return ResourceManager.GetString("Province_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La ville est requise..
+        /// </summary>
+        internal static string Ville_Required {
+            get {
+                return ResourceManager.GetString("Ville_Required", resourceCulture);
             }
         }
     }
