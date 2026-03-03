@@ -41,5 +41,32 @@
                    asp-route-evenementId="@Model.Id">Poser une question aux organisteurs</a>
             </div>
         }
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <div class="mt-3">
+                <a class="mt-5"
+                   asp-controller="Commentaires"
+                   asp-action="New"
+                   asp-route-evenementId="@Model.Id">Donnez/Modifiez votre avis sur l'événement!</a>
+            </div>
+        }
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Commentaires</h3>
+            <hr />
+            @foreach (var commentaire in Model.Commentaires ?? [])
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <small class="text-muted">
+                            <strong>@commentaire.Utilisateur!.Prenom @commentaire.Utilisateur!.Nom</strong>
+                        </small>
+                        <p class="card-text">@commentaire.Contenu</p>
+                        <small class="text-muted">Le @commentaire.CreatedAt.ToShortDateString()</small>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </div>

@@ -26,10 +26,12 @@ builder.Services.AddMigrations(configuration.GetConnectionString("AppDatabaseCon
 builder.Services.AddScoped<IEvenementRepository, EvenementRepository>();
 builder.Services.AddScoped<IVilleRepository, VilleRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<ICommentaireRepository, CommentaireRepository>();
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IEvenementService, EvenementService>();
 builder.Services.AddScoped<IVilleService, VilleService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<ICommentaireService, CommentaireService>();
 builder.Services.AddScoped<IRoleStore<ApplicationRole>, RoleRepository>();
 builder.Services.AddScoped<IUserStore<ApplicationUser>, UserRepository>();
 

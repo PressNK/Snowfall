@@ -1,0 +1,18 @@
+﻿@model CommentairesIndexViewModel
+
+@{
+    ViewBag.Title = "Vos Commentaires";
+}
+
+<h2>Vos commentaires pour l'évémement @Model.Evenement.Nom</h2>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        @foreach (Commentaire commentaire in Model.Commentaires)
+        {
+            <partial name="_Commentaire" model="commentaire"/>
+        }
+    </div> 
+</div>
+
+

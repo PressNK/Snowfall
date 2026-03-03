@@ -11,4 +11,5 @@ public class Evenement
     public int Capacite { get; set; }
     public required int VilleId { get; set; }
     public required Ville Ville { get; set; }
+    public List<Commentaire>? Commentaires { get; set; }
 }

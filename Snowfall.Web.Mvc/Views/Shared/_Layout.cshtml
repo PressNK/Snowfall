@@ -63,6 +63,14 @@
                                 Connexion
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link @(controller == "Comptes" ? "active" : String.Empty)"
+                                asp-controller="Comptes"
+                                asp-action="Inscription">
+                                Inscription
+                            </a>
+                        </li>
                     }
                 </ul>
                 @if (User.Identity != null && User.Identity.IsAuthenticated)

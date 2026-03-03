@@ -31,7 +31,7 @@ public class ComptesController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = new ApplicationUser()
+            var user = new ApplicationUser
             {
                 Email = inscriptionViewModel.Email,
                 Nom = inscriptionViewModel.Nom,

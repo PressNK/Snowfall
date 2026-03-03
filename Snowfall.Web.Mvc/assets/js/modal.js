@@ -14,3 +14,18 @@ document.addEventListener('htmx:afterSwap', function (event) {
         modal.show();
     }
 });
+
+document.addEventListener('htmx:beforeSwap', function (event) {
+    if (event.detail.target.id === "app-modal-manager") {
+        let existingModal = document.getElementById('app-modal-commentaire');
+        if (existingModal) existingModal.remove();
+    }
+});
+
+document.addEventListener('htmx:afterSwap', function (event) {
+    if (event.detail.target.id === "app-modal-manager") {
+        let modalElement = document.getElementById('app-modal-commentaire');
+        let modal = new Modal(modalElement);
+        modal.show();
+    }
+});

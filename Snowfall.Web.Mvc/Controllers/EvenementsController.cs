@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Snowfall.Application.Services;
 using Snowfall.Domain.Models;
 using Snowfall.Web.Mvc.Models.Evenements;
@@ -10,11 +12,16 @@ public class EvenementsController : Controller
 {
     private IEvenementService _evenementService;
     private IVilleService _villeService;
+    private ICommentaireService _commentaireService;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public EvenementsController(IEvenementService evenementService, IVilleService villeService)
+    public EvenementsController(IEvenementService evenementService, IVilleService villeService, 
+        ICommentaireService commentaireService, UserManager<ApplicationUser> userManager)
     {
         _evenementService = evenementService;
         _villeService = villeService;
+        _commentaireService = commentaireService;
+        _userManager = userManager;
     }
 
     [Route("/")]
@@ -27,7 +34,7 @@ public class EvenementsController : Controller
         var viewModel = new EvenementsIndexViewModel
         {
             Evenements = evenements,
-            FiltresEvenements = new FiltresEvenementsViewModel()
+            FiltresEvenements = new FiltresEvenementsViewModel
             {
                 Villes = villes,
                 SelectedVilleId = ville
@@ -42,6 +49,14 @@ public class EvenementsController : Controller
         var evenement = await _evenementService.FindById(id);
 
         if (evenement == null) return NotFound();
+        
+        var commentaires = await _commentaireService.FindByEvenementId(id);
+        foreach (var commentaire in commentaires)
+        {
+            commentaire.Utilisateur = await _userManager.FindByIdAsync(commentaire.UtilisateurId);
+        }
+        
+        evenement.Commentaires = commentaires;
 
         return View(evenement);
     }

@@ -28,7 +28,7 @@ public class QuestionsController : Controller
         
         var questions = await _questionService.FindByEvenementIdAndUserId(evenementId, User.Identity!.Id());
         
-        var viewModel = new QuestionsIndexViewModel()
+        var viewModel = new QuestionsIndexViewModel
         {
             Evenement = evenement,
             Questions = questions
@@ -44,7 +44,7 @@ public class QuestionsController : Controller
         var evenement = await _evenementService.FindById(evenementId);
         if (evenement == null) return NotFound();
         
-        var viewModel = new CreerQuestionViewModel()
+        var viewModel = new CreerQuestionViewModel
         {
             EvenementId = evenementId
         };
@@ -65,7 +65,7 @@ public class QuestionsController : Controller
             return View("New", questionViewModel);
         }
 
-        var questionToCreate = new Question()
+        var questionToCreate = new Question
         {
             EvenementId = questionViewModel.EvenementId,
             Contenu = questionViewModel.Contenu,
@@ -90,7 +90,7 @@ public class QuestionsController : Controller
         if (question.UtilisateurId != User.Identity?.Id())
             return Forbid();
         
-        var viewModel = new ModifierQuestionViewModel()
+        var viewModel = new ModifierQuestionViewModel
         {
             Id = question.Id,
             EvenementId = question.EvenementId,
