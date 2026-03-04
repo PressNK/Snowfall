@@ -46,7 +46,7 @@ public class ComptesController : Controller
                     Province = inscriptionViewModel.Province,
                 }
             };
-            var inscriptionResult = await _userManager.CreateAsync(user, inscriptionViewModel.Password!);
+            var inscriptionResult = await _userManager.CreateAsync(user, inscriptionViewModel.Password);
 
             if (inscriptionResult.Succeeded)
             {
