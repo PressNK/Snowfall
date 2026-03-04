@@ -24,4 +24,7 @@
     <data name="Inscription.RequiresNonAlphanumeric" xml:space="preserve">
         <value>Le mot de passe doit contenir au moins un caractère qui n'est pas alphanumérique.</value>
     </data>
+    <data name="Inscription.Connexion.Echec" xml:space="preserve">
+        <value>Erreur de connexion.</value>
+    </data>
 </root>

@@ -60,6 +60,15 @@ namespace Snowfall.Web.Mvc.Resources.Controllers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erreur de connexion..
+        /// </summary>
+        internal static string Inscription_Connexion_Echec {
+            get {
+                return ResourceManager.GetString("Inscription.Connexion.Echec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to L&apos;inscription a échouée. Vérifiez les données entrées..
         /// </summary>
         internal static string Inscription_Echec {

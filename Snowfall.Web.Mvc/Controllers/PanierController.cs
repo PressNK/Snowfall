@@ -56,7 +56,8 @@ public class PanierController : Controller
                 panierItems.Add(panierItem);
 
             HttpContext.Session.SetString("panier", JsonSerializer.Serialize(panierItems));
-            return RedirectToAction("Index", "Panier");
+            TempData["success"] = "Événement ajouté au panier!";
+            return RedirectToAction("Show", "Evenements", new { id = evenement.Id });
         }
         return BadRequest();
     }

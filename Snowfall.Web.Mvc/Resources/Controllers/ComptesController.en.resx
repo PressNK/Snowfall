@@ -17,4 +17,7 @@
     <data name="Inscription.RequiresNonAlphanumeric" xml:space="preserve">
         <value>Passwords must have at least one non alphanumeric character.</value>
     </data>
+    <data name="Inscription.Connexion.Echec" xml:space="preserve">
+        <value>Connection error.</value>
+    </data>
 </root>

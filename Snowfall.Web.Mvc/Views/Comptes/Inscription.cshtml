@@ -18,6 +18,13 @@
     </div>
 }
 
+@if (Html.ViewData.ModelState["Inscription.Connexion.Echec"]?.Errors.Count > 0)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationMessage("Inscription.Connexion.Echec")
+    </div>
+}
+
 <div class="row">
     <div class="col-md-6 offset-md-3">
         <h1 class="mb-3">Créer un compte</h1>

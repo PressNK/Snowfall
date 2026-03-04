@@ -60,6 +60,7 @@ public class ComptesController : Controller
 
                 if (connexionResult.Succeeded)
                     return RedirectToAction("Index", "Evenements");
+                ModelState.AddModelError("Inscription.Connexion.Echec", Resources.Controllers.ComptesController.Inscription_Connexion_Echec);
             }
             else
             {
