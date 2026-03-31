@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz — Rendu côté client vs Rendu côté serveur</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 860px;
+            margin: 40px auto;
+            padding: 0 24px;
+            background-color: #f5f7fa;
+            color: #2d2d2d;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a1a2e;
+            border-bottom: 3px solid #4a90d9;
+            padding-bottom: 12px;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 5px solid #4a90d9;
+        }
+
+        .question-card h3 {
+            margin-top: 0;
+            color: #1a1a2e;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.6;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            font-style: italic;
+            margin: 10px 0 16px 0;
+            color: #333;
+        }
+
+        .choices {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+        }
+
+        .choices li {
+            padding: 6px 10px;
+            margin: 4px 0;
+            border-radius: 5px;
+            background: #f0f4fa;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0 16px 0;
+        }
+
+        th {
+            background: #4a90d9;
+            color: white;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #e0e0e0;
+            background: #f9f9f9;
+        }
+
+        details {
+            margin-top: 12px;
+        }
+
+        summary {
+            cursor: pointer;
+            background: #4a90d9;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            user-select: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        summary:hover {
+            background: #357abd;
+        }
+
+        details[open] summary {
+            background: #2c6e9e;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .answer-box {
+            background: #eaf4ff;
+            border: 1px solid #b3d4f5;
+            border-top: none;
+            border-radius: 0 6px 6px 6px;
+            padding: 16px;
+            margin-top: 0;
+        }
+
+        .answer-box p {
+            margin: 6px 0;
+        }
+
+        .correct {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .wrong {
+            color: #c62828;
+        }
+
+        .answer-box ul {
+            margin: 6px 0;
+            padding-left: 20px;
+        }
+
+        .answer-box li {
+            margin: 4px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: #e3edf7;
+            color: #4a90d9;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🖥️ Quiz — CSR vs SSR</h1>
+
+<!-- Q1 -->
+<div class="question-card">
+    <h3>Question 1</h3>
+    <span class="tag">Vrai ou Faux</span>
+    <p class="question-text">Dans le rendu côté client, le serveur retourne une page HTML complète avec toutes les données déjà insérées.</p>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <p class="correct">✅ FAUX</p>
+            <p>Dans le CSR, le serveur envoie une page <strong>quasi vide</strong>. C'est ensuite le navigateur qui, via des appels API, récupère les données et génère le HTML dynamiquement côté client.</p>
+        </div>
+    </details>
+</div>
+
+<!-- Q2 -->
+<div class="question-card">
+    <h3>Question 2</h3>
+    <span class="tag">Choix multiple</span>
+    <p class="question-text">Lequel des énoncés suivants décrit le mieux le rendu côté serveur (SSR) ?</p>
+    <ul class="choices">
+        <li>A) Le navigateur télécharge du JavaScript et génère le HTML lui-même</li>
+        <li>B) Le serveur génère un HTML complet et l'envoie directement au navigateur</li>
+        <li>C) Le serveur envoie une page vide et le client fait des appels API pour obtenir les données</li>
+        <li>D) Le rendu se fait en WASM directement dans le navigateur</li>
+    </ul>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <p class="correct">✅ B) Le serveur génère un HTML complet et l'envoie directement au navigateur</p>
+            <ul>
+                <li class="wrong">A) ❌ C'est le CSR</li>
+                <li class="wrong">C) ❌ C'est le CSR</li>
+                <li class="wrong">D) ❌ WASM peut être utilisé en CSR, mais ce n'est pas la définition du SSR</li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+<!-- Q3 -->
+<div class="question-card">
+    <h3>Question 3</h3>
+    <span class="tag">Court développement</span>
+    <p class="question-text">Pourquoi le rendu côté serveur est-il généralement <strong>meilleur pour le référencement (SEO)</strong> comparé au rendu côté client ?</p>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <p><strong>Éléments de réponse attendus :</strong></p>
+            <ul>
+                <li>Les robots des moteurs de recherche (ex. : Googlebot) <strong>lisent le HTML directement</strong></li>
+                <li>En SSR, le HTML est <strong>déjà complet</strong> à la réception → le robot peut l'indexer immédiatement</li>
+                <li>En CSR, la page est quasi vide à la réception → le robot doit exécuter le JavaScript pour voir le contenu, ce qu'il ne fait pas toujours correctement</li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+<!-- Q4 -->
+<div class="question-card">
+    <h3>Question 4</h3>
+    <span class="tag">Choix multiple</span>
+    <p class="question-text">Dans une application en rendu côté client, quel est le rôle principal du serveur ?</p>
+    <ul class="choices">
+        <li>A) Générer le HTML final et l'envoyer au client</li>
+        <li>B) Exécuter le JavaScript pour préparer la page</li>
+        <li>C) Fournir des données via des appels API</li>
+        <li>D) Compiler le code WASM à la demande</li>
+    </ul>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <p class="correct">✅ C) Fournir des données via des appels API</p>
+            <ul>
+                <li class="wrong">A) ❌ C'est le rôle du serveur en SSR</li>
+                <li class="wrong">B) ❌ Le JavaScript est exécuté dans le navigateur, pas sur le serveur</li>
+                <li class="wrong">D) ❌ WASM est compilé à l'avance, pas à la demande</li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+<!-- Q5 -->
+<div class="question-card">
+    <h3>Question 5</h3>
+    <span class="tag">Association</span>
+    <p class="question-text">Associez chaque caractéristique à la bonne approche de rendu (CSR ou SSR) :</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Caractéristique</th>
+                <th>CSR ou SSR ?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Page quasi vide envoyée initialement</td><td></td></tr>
+            <tr><td>Forte dépendance à JavaScript</td><td></td></tr>
+            <tr><td>Rechargement de page fréquent</td><td></td></tr>
+            <tr><td>HTML complet retourné par le serveur</td><td></td></tr>
+            <tr><td>Meilleure réactivité côté interface</td><td></td></tr>
+        </tbody>
+    </table>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Caractéristique</th>
+                        <th>Réponse</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Page quasi vide envoyée initialement</td><td class="correct">CSR</td></tr>
+                    <tr><td>Forte dépendance à JavaScript</td><td class="correct">CSR</td></tr>
+                    <tr><td>Rechargement de page fréquent</td><td class="correct">SSR</td></tr>
+                    <tr><td>HTML complet retourné par le serveur</td><td class="correct">SSR</td></tr>
+                    <tr><td>Meilleure réactivité côté interface</td><td class="correct">CSR</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </details>
+</div>
+
+<!-- Q6 -->
+<div class="question-card">
+    <h3>Question 6</h3>
+    <span class="tag">Vrai ou Faux</span>
+    <p class="question-text">Une application en rendu côté serveur <strong>ne peut jamais</strong> avoir des interactions fluides sans rechargement de page.</p>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <p class="correct">✅ FAUX</p>
+            <p>Il est possible de pallier cette lacune via des librairies comme <strong>htmx</strong>, qui permettent de faire des mises à jour partielles de la page sans rechargement complet, tout en conservant le SSR.</p>
+        </div>
+    </details>
+</div>
+
+<!-- Q7 -->
+<div class="question-card">
+    <h3>Question 7</h3>
+    <span class="tag">Court développement</span>
+    <p class="question-text">Ton patron te demande de développer un site vitrine pour une boutique en ligne. Le référencement Google est une priorité absolue. Quelle approche de rendu recommanderais-tu et pourquoi ?</p>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <p class="correct">✅ SSR (rendu côté serveur)</p>
+            <ul>
+                <li>Le référencement Google est prioritaire → le HTML doit être lisible immédiatement par les robots</li>
+                <li>Un site vitrine nécessite peu d'interactions complexes → les rechargements de page ne sont pas un problème majeur</li>
+                <li>Le SSR est simple et efficace pour ce type d'usage</li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+<!-- Q8 -->
+<div class="question-card">
+    <h3>Question 8</h3>
+    <span class="tag">Choix multiple</span>
+    <p class="question-text">Quelle technologie est mentionnée comme solution pour <strong>pallier le manque de fluidité</strong> dans le rendu côté serveur ?</p>
+    <ul class="choices">
+        <li>A) React</li>
+        <li>B) Blazor</li>
+        <li>C) htmx</li>
+        <li>D) Angular</li>
+    </ul>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <p class="correct">✅ C) htmx</p>
+            <ul>
+                <li class="wrong">A) React ❌ — framework CSR</li>
+                <li class="wrong">B) Blazor ❌ — mentionné comme alternative à JavaScript en CSR</li>
+                <li class="wrong">D) Angular ❌ — framework CSR</li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+<!-- Q9 -->
+<div class="question-card">
+    <h3>Question 9</h3>
+    <span class="tag">Court développement</span>
+    <p class="question-text">Nomme <strong>une situation</strong> où le rendu côté client serait un <strong>meilleur choix</strong> que le rendu côté serveur. Justifie ta réponse.</p>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <p><strong>Exemples de réponses acceptables :</strong></p>
+            <ul>
+                <li>Un <strong>tableau de bord (dashboard)</strong> avec graphiques mis à jour en temps réel</li>
+                <li>Une <strong>application interne d'entreprise</strong> où le SEO n'a aucune importance</li>
+                <li>Une <strong>application de messagerie</strong> (type Slack, Teams) nécessitant une grande réactivité</li>
+                <li>Une <strong>application mobile-first de type SPA</strong></li>
+            </ul>
+            <p><strong>Justification attendue :</strong> le SEO n'est pas une priorité ET la réactivité de l'interface est importante.</p>
+        </div>
+    </details>
+</div>
+
+<!-- Q10 -->
+<div class="question-card">
+    <h3>Question 10</h3>
+    <span class="tag">Analyse</span>
+    <p class="question-text">Un développeur dit : <em>"Je préfère toujours utiliser le rendu côté client, c'est plus moderne et plus performant."</em><br><br>Identifie <strong>deux faiblesses</strong> dans cet argument en te basant sur ce que tu as appris.</p>
+    <details>
+        <summary>👁️ Voir la réponse</summary>
+        <div class="answer-box">
+            <p><strong>Deux faiblesses parmi les suivantes :</strong></p>
+            <ul>
+                <li><strong>« Plus performant » est relatif</strong> : en CSR, le premier chargement est souvent plus lent car le navigateur doit télécharger le JavaScript, l'exécuter et faire des appels API avant d'afficher quoi que ce soit</li>
+                <li><strong>Mauvais pour le SEO</strong> : les moteurs de recherche ont du mal à indexer du contenu généré dynamiquement par JavaScript</li>
+                <li><strong>Complexité accrue</strong> : le CSR nécessite une logique côté client ET une logique côté serveur (API), ce qui augmente la complexité du projet</li>
+                <li><strong>« Plus moderne » n'est pas un argument technique</strong> : le choix doit dépendre des besoins du projet, pas de la tendance</li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+</body>
+</html>
+
