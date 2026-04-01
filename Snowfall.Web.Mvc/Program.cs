@@ -5,6 +5,7 @@ using Snowfall.Data.Configurations;
 using Snowfall.Data.Context;
 using Snowfall.Data.Repositories;
 using Snowfall.Domain.Models;
+using Snowfall.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -23,15 +24,7 @@ builder.Services.AddSession();
 builder.Services.AddMigrations(configuration.GetConnectionString("AppDatabaseConnection")!);
 
 // Injection de dépendances
-builder.Services.AddScoped<IEvenementRepository, EvenementRepository>();
-builder.Services.AddScoped<IVilleRepository, VilleRepository>();
-builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
-builder.Services.AddScoped<ICommentaireRepository, CommentaireRepository>();
-builder.Services.AddSingleton<DapperContext>();
-builder.Services.AddScoped<IEvenementService, EvenementService>();
-builder.Services.AddScoped<IVilleService, VilleService>();
-builder.Services.AddScoped<IQuestionService, QuestionService>();
-builder.Services.AddScoped<ICommentaireService, CommentaireService>();
+builder.Services.EnregistrerServices();
 builder.Services.AddScoped<IRoleStore<ApplicationRole>, RoleRepository>();
 builder.Services.AddScoped<IUserStore<ApplicationUser>, UserRepository>();
 

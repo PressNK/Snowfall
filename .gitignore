@@ -4,8 +4,8 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea
-Snowfall.sln.DotSettings.user
-Snowfall.Web.Mvc/wwwrooot/dist
+**/*.DotSettings.user
+**/dist
 
 # Node
 node_modules/

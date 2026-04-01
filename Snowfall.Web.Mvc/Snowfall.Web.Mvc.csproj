@@ -10,6 +10,7 @@
       <ProjectReference Include="..\Snowfall.Application\Snowfall.Application.csproj" />
       <ProjectReference Include="..\Snowfall.Data\Snowfall.Data.csproj" />
       <ProjectReference Include="..\Snowfall.Domain\Snowfall.Domain.csproj" />
+      <ProjectReference Include="..\Snowfall.Shared\Snowfall.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
