@@ -39,7 +39,6 @@ Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 var app = builder.Build();
 
 
-app.Services.MigrateDown();
 app.Services.MigrateUp();
 
 // Configure the HTTP request pipeline.

@@ -1,0 +1,73 @@
+﻿@using Snowfall.Application.Dtos.Evenements
+
+@if (Evenement == null)
+{
+    <p>Chargement de l'événement...</p>
+}
+else
+{
+    <div class="card shadow-sm">
+        @if (!string.IsNullOrEmpty(Evenement.ImagePath))
+        {
+            <img src="@Evenement.ImagePath" class="card-img-top image-evenement" alt="@Evenement.Nom" />
+        }
+        <div class="card-body">
+            <h2 class="card-title fw-bold">@Evenement.Nom</h2>
+            @if (!string.IsNullOrEmpty(Evenement.Description))
+            {
+                <p class="card-text text-muted">@Evenement.Description</p>
+            }
+            <hr />
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fs-4">📅</span>
+                        <div>
+                            <small class="text-muted d-block">Date</small>
+                            <strong>@Evenement.Date.ToString("D")</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fs-4">💲</span>
+                        <div>
+                            <small class="text-muted d-block">Prix</small>
+                            <strong>@Evenement.Prix.ToString("C")</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fs-4">👥</span>
+                        <div>
+                            <small class="text-muted d-block">Capacité</small>
+                            <strong>@Evenement.Capacite places</strong>
+                        </div>
+                    </div>
+                </div>
+                @if (Evenement.Ville != null)
+                {
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fs-4">📍</span>
+                            <div>
+                                <small class="text-muted d-block">Ville</small>
+                                <strong>@Evenement.Ville.Nom (@Evenement.Ville.PaysIso)</strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end gap-2">
+            <button class="btn btn-primary">✏️ Modifier</button>
+            <button class="btn btn-danger">🗑️ Supprimer</button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public EvenementDto? Evenement { get; set; }
+}

@@ -26,4 +26,14 @@ public class EvenementService : IEvenementService
     {
         return await _evenementRepository.FindByVilleId(villeId);
     }
+    
+    public async Task<Evenement> Create(Evenement evenement)
+    {
+        return await _evenementRepository.Create(evenement);
+    }
+    
+    public async Task<bool> Update(Evenement evenement)
+    {
+        return await _evenementRepository.Update(evenement);
+    }
 }

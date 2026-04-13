@@ -11,4 +11,19 @@
       <ProjectReference Include="..\Snowfall.Domain\Snowfall.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Evenements.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Evenements.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\Evenements.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Evenements.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

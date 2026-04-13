@@ -1,0 +1,33 @@
+﻿@using Snowfall.Application.Dtos.Evenements
+
+@if (Evenements == null)
+{
+    <p>Chargement des événements...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Ville</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (EvenementDto evenement in Evenements)
+        {
+            <tr>
+                <td>@evenement.Id</td>
+                <td><NavLink href=@($"/evenements/{@evenement.Id}")>@evenement.Nom</NavLink></td>
+                <td>@evenement.Ville?.Nom</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public List<EvenementDto>? Evenements { get; set; }
+}

@@ -1,0 +1,25 @@
+﻿@page "/evenements"
+@using Microsoft.Extensions.Localization
+@using Snowfall.Application.Dtos.Evenements
+@using Snowfall.Web.Admin.HttpClients
+@using Snowfall.Web.Admin.Pages.Evenements.Components
+@using Snowfall.Web.Admin.Resources
+
+@inject EvenementHttpClient EvenementHttpClient
+@inject IStringLocalizer<Resources.Evenements.Index> Localizer;
+@inject IStringLocalizer<SharedResources> LocalizerShared;
+
+<NavLink href="/">@LocalizerShared["Retour"]</NavLink>
+<h1>@Localizer["Titre"]</h1>
+
+<EvenementListe Evenements="_evenements"></EvenementListe>
+
+@code {
+    private List<EvenementDto>? _evenements;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        _evenements = await EvenementHttpClient.ObtenirEvenements();
+    }
+}

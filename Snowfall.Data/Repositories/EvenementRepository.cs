@@ -79,4 +79,41 @@ public class EvenementRepository : IEvenementRepository
             return evenements.ToList();
         }
     }
+    
+    public async Task<Evenement> Create(Evenement evenement)
+    {
+        string sql = @"
+            INSERT INTO evenements (nom, description, image_path, date, prix, capacite, ville_id)
+            VALUES (@Nom, @Description, @ImagePath, @Date, @Prix, @Capacite, @VilleId)
+            RETURNING id;
+        ";
+        
+        using (IDbConnection connection = _dbContext.CreateConnection())
+        {
+            var id = await connection.QuerySingleAsync<int>(sql, evenement);
+            evenement.Id = id;
+            return evenement;
+        }
+    }
+
+    public async Task<bool> Update(Evenement evenement)
+    {
+        string sql = @"
+            UPDATE evenements SET
+                nom = @Nom, 
+                description = @Description, 
+                image_path = @ImagePath, 
+                date = @Date, 
+                prix = @Prix, 
+                capacite = @Capacite, 
+                ville_id = @VilleId
+            WHERE id = @Id
+        ";
+    
+        using (IDbConnection connection = _dbContext.CreateConnection())
+        {
+            var affectedRows = await connection.ExecuteAsync(sql, evenement);
+            return affectedRows == 1;
+        }
+    }
 }

@@ -1,0 +1,39 @@
+﻿@page "/evenements/{Id:int}"
+@using System.Net
+@using Snowfall.Application.Dtos.Evenements
+@using Snowfall.Web.Admin.HttpClients
+@using Snowfall.Web.Admin.Pages.Evenements.Components
+
+@inject EvenementHttpClient EvenementHttpClient
+
+<h3>Show</h3>
+
+@if (_evenementDto == null)
+{
+    @if (!string.IsNullOrEmpty(alertMessage))
+    {
+        <div class="alert alert-danger">@alertMessage</div>
+    }
+    else
+    {
+        <p>Chargement de l'événement...</p>   
+    }
+}
+else
+{
+    <Event Evenement="_evenementDto"></Event>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private string? alertMessage;
+    private EvenementDto? _evenementDto;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        (var statusCode, _evenementDto) = await EvenementHttpClient.ObtenirEvenement(Id);
+        if (statusCode == HttpStatusCode.NotFound)
+            alertMessage = "Désolé, aucun événement n'a été trouvé.";
+    }
+}
