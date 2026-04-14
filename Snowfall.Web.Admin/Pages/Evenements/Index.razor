@@ -10,7 +10,10 @@
 @inject IStringLocalizer<SharedResources> LocalizerShared;
 
 <NavLink href="/">@LocalizerShared["Retour"]</NavLink>
-<h1>@Localizer["Titre"]</h1>
+<div class="row mb-3 mt-3">
+    <div class="col-lg-9"><h1>@Localizer["Titre"]</h1></div>
+    <div class="col-lg-3 d-flex align-items-center justify-content-end"><NavLink class="btn btn-primary" href="/evenements/new">Ajouter un événement</NavLink></div>
+</div>
 
 <EvenementListe Evenements="_evenements"></EvenementListe>
 

@@ -80,5 +80,18 @@ namespace Snowfall.Web.Api.Controllers
             return Ok(_mapper.Map<EvenementDto>(evenement));
         }
         
+        /// <summary>
+        /// DELETE /api/evenements/{id}
+        /// Permets de supprimer un événement
+        /// </summary>
+        /// <param name="id">Le id de l'événement à supprimer</param>
+        /// <returns></returns>
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool resultat = await _evenementService.Delete(id);
+
+            return resultat ? Ok() : NotFound();
+        }
     }
 }

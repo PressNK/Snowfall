@@ -9,4 +9,5 @@ public interface IEvenementService
     Task<List<Evenement>> FindByVilleId(int villeId);
     Task<Evenement> Create(Evenement evenement);
     Task<bool> Update(Evenement evenement);
+    Task<bool> Delete(int id);
 }

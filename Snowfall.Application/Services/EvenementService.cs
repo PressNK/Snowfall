@@ -36,4 +36,9 @@ public class EvenementService : IEvenementService
     {
         return await _evenementRepository.Update(evenement);
     }
+    
+    public async Task<bool> Delete(int id)
+    {
+        return await _evenementRepository.Delete(id);
+    }
 }

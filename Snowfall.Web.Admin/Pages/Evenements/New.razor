@@ -1,0 +1,17 @@
+@page "/evenements/new"
+@using Microsoft.Extensions.Localization
+@using Snowfall.Application.Dtos.Evenements
+@using Snowfall.Web.Admin.Resources
+@inject IStringLocalizer<Resources.Evenements.New> Localizer;
+@inject IStringLocalizer<SharedResources> LocalizerShared;
+
+<NavLink href="/">@LocalizerShared["Retour"]</NavLink>
+<h1>@Localizer["Titre"]</h1>
+
+<div class="col-lg-6">
+    <EditForm Model="_creerEvenementDto" OnSubmit=""></EditForm>
+</div>
+
+@code {
+    private CreerEvenementDto _creerEvenementDto = new();
+}

@@ -116,4 +116,22 @@ public class EvenementRepository : IEvenementRepository
             return affectedRows == 1;
         }
     }
+
+    public async Task<bool> Delete(int id)
+    {
+        string sql = @"
+            DELETE FROM evenements
+            WHERE id = @Id
+        ";
+
+        using (IDbConnection connection = _dbContext.CreateConnection())
+        {
+            var param = new
+            {
+                Id = id
+            };
+            var affectedRows = await connection.ExecuteAsync(sql, param);
+            return affectedRows == 1;
+        }
+    }
 }
