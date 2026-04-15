@@ -33,4 +33,33 @@ public class EvenementHttpClient
 
         return (statusCode, evenement);
     }
+    
+    public async Task<EvenementDto?> CreerEvenement(CreerEvenementDto creerEvenementDto)
+    {
+        // L'événement est null par défaut, à moins que l'appel à l'API soit un succès
+        EvenementDto? evenement = null;
+
+        // Communication avec l'API via PostAsJsonAync. On envoie le DTO.
+        var response = await _client.PostAsJsonAsync(BaseApiUrl, creerEvenementDto);
+
+        // Si la réponse est un succès, on assigne le retour à l'événement
+        if (response.IsSuccessStatusCode)
+        {
+            evenement = await response.Content.ReadFromJsonAsync<EvenementDto>();
+        }
+
+        // Retourne null ou l'événement dans le cas d'un succès
+        return evenement;
+    }
+    
+    /// <summary>
+    /// Permets de modifier un événement
+    /// </summary>
+    /// <param name="id">L'identifiant de l'événement à modifier</param>
+    /// <param name="modifierEvenementDto">L'événement à modifier</param>
+    /// <returns>Bool représentant le succès ou l'échec de la requête</returns>
+    public async Task<bool> ModifierEvenement(int id, ModifierEvenementDto modifierEvenementDto)
+    {
+        // Oups... à compléter!
+    }
 }

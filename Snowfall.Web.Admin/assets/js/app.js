@@ -5,3 +5,4 @@ import '../scss/app.scss'
 
 // Importation du JavaScript de Bootstrap
 import * as bootstrap from 'bootstrap'
+window.bootstrap = bootstrap;

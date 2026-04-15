@@ -1,7 +1,7 @@
 using Scalar.AspNetCore;
+using Snowfall.Application.Mappings;
 using Snowfall.Data.Configurations;
 using Snowfall.Shared;
-using Snowfall.Web.Api.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 

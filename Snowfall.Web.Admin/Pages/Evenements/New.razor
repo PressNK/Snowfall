@@ -1,17 +1,93 @@
 @page "/evenements/new"
 @using Microsoft.Extensions.Localization
 @using Snowfall.Application.Dtos.Evenements
+@using Snowfall.Web.Admin.HttpClients
 @using Snowfall.Web.Admin.Resources
 @inject IStringLocalizer<Resources.Evenements.New> Localizer;
 @inject IStringLocalizer<SharedResources> LocalizerShared;
+@inject VilleHttpClient VilleHttpClient;
+@inject EvenementHttpClient EvenementHttpClient;
+@inject NavigationManager NavigationManager;
+@inject ToastService ToastService
 
 <NavLink href="/">@LocalizerShared["Retour"]</NavLink>
 <h1>@Localizer["Titre"]</h1>
 
 <div class="col-lg-6">
-    <EditForm Model="_creerEvenementDto" OnSubmit=""></EditForm>
+    <EditForm Model="_creerEvenementDto" OnValidSubmit="GererSubmit">
+        <DataAnnotationsValidator />
+        
+        <div class="form-floating mb-3">
+            <InputText id="nom" class="form-control" placeholder="Nom" @bind-Value="_creerEvenementDto.Nom"/>
+            <label asp-for="nom">Nom</label>
+            <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Nom)" />
+        </div>
+        <div class="form-floating mb-3">
+            <InputTextArea id="description" rows="5" class="form-control" placeholder="Description" @bind-Value="_creerEvenementDto.Description"/>
+            <label asp-for="description">Description</label>
+            <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Description)" />
+        </div>
+
+        <div class="form-floating mb-3">
+            <InputNumber id="capacite" class="form-control" placeholder="Capacité" ParsingErrorMessage=@LocalizerShared["CapaciteParsingErrorMessage"] @bind-Value="_creerEvenementDto.Capacite"/>
+            <label asp-for="capacite">Capacité</label>
+            <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Capacite)" />
+        </div>
+        <div class="form-floating mb-3">
+            <InputDate id="date" class="form-control" placeholder="Date" @bind-Value="_creerEvenementDto.Date"/>
+            <label asp-for="date">Date</label>
+            <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Date)" />
+        </div>
+        <div class="form-floating mb-3">
+            <InputNumber id="prix" class="form-control" placeholder="Prix" ParsingErrorMessage=@LocalizerShared["PrixParsingErrorMessage"] @bind-Value="_creerEvenementDto.Prix"/>
+            <label asp-for="prix">Prix</label>
+            <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Prix)" />
+        </div>
+        <div class="form-floating mb-3">
+            <InputSelect id="ville" class="form-select" @bind-Value="_creerEvenementDto.VilleId">
+                <option value="">Veuillez faire une sélection</option>
+                @if (_villes != null)
+                {
+                    @foreach (var ville in _villes)
+                    {
+                        <option value="@ville.Id">@ville.Nom, @ville.PaysIso</option>
+                    }
+                }
+            </InputSelect>
+            <label for="ville">Ville</label>
+            <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.VilleId)" />
+        </div>
+        <button type="submit" class="btn btn-primary">@LocalizerShared["Bouton_Sauvegarder"]</button>
+        <button class="btn btn-secondary" @onclick="Retour">@LocalizerShared["Bouton_Annuler"]</button>
+    </EditForm>
 </div>
 
 @code {
     private CreerEvenementDto _creerEvenementDto = new();
+    private List<VilleDto>? _villes;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _villes = await VilleHttpClient.ObtenirVilles();
+    }
+    
+    async Task GererSubmit()
+    {
+        var evenement = await EvenementHttpClient.CreerEvenement(_creerEvenementDto);
+        Console.WriteLine("Le formulaire a bien été soumis");
+        if (evenement != null)
+        {
+            ToastService.Notify(new(ToastType.Success, "L'événement a été créé!"));
+            NavigationManager.NavigateTo($"/evenements/{evenement.Id}");
+        }
+        else
+        {
+            ToastService.Notify(new(ToastType.Danger, "Une erreur est survenue!"));
+        }
+    }
+    
+    void Retour()
+    {
+        NavigationManager.NavigateTo("/evenements");
+    }
 }

@@ -10,6 +10,7 @@ public static class InjectionDependancesConfig
             throw new ArgumentNullException(nameof(services));
 
         services.AddScoped<EvenementHttpClient>();
+        services.AddScoped<VilleHttpClient>();
 
         return services;
     }

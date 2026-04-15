@@ -21,4 +21,16 @@
     <data name="Retour" xml:space="preserve">
         <value>Retour</value>
     </data>
+    <data name="Bouton_Annuler" xml:space="preserve">
+        <value>Annuler</value>
+    </data>
+    <data name="CapaciteParsingErrorMessage" xml:space="preserve">
+        <value>La capacité doit être un nombre</value>
+    </data>
+    <data name="PrixParsingErrorMessage" xml:space="preserve">
+        <value>Le prix doit être un nombre</value>
+    </data>
+    <data name="Bouton_Sauvegarder" xml:space="preserve">
+        <value>Sauvegarder</value>
+    </data>
 </root>

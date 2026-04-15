@@ -6,7 +6,6 @@ public class ModifierEvenementDto
 {
     [Required(ErrorMessageResourceType = typeof(Resources.Evenements), ErrorMessageResourceName = "Nom_Required")]
     public string Nom { get; set; } = null!;
-    [MinLength(10, ErrorMessageResourceType = typeof(Resources.Evenements), ErrorMessageResourceName = "Description_MinLength")]
     public string? Description { get; set; }
     public string? ImagePath { get; set; }
     [Required(ErrorMessageResourceType = typeof(Resources.Evenements), ErrorMessageResourceName = "Date_Required")]

@@ -5,3 +5,7 @@
   max-height: 300px;
   object-fit: cover;
 }
+
+.invalid {
+  @extend .is-invalid;
+}

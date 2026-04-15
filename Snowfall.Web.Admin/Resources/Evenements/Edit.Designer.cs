@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Snowfall.Web.Admin.Resources {
+namespace Snowfall.Web.Admin.Resources.Evenements {
     using System;
     
     
@@ -21,14 +21,14 @@ namespace Snowfall.Web.Admin.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SharedResources {
+    internal class Edit {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SharedResources() {
+        internal Edit() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace Snowfall.Web.Admin.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Snowfall.Web.Admin.Resources.SharedResources", typeof(SharedResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Snowfall.Web.Admin.Resources.Evenements.Edit", typeof(Edit).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,47 +60,11 @@ namespace Snowfall.Web.Admin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annuler.
+        ///   Looks up a localized string similar to Modifier l&apos;événement.
         /// </summary>
-        internal static string Bouton_Annuler {
+        internal static string Titre {
             get {
-                return ResourceManager.GetString("Bouton_Annuler", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sauvegarder.
-        /// </summary>
-        internal static string Bouton_Sauvegarder {
-            get {
-                return ResourceManager.GetString("Bouton_Sauvegarder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to La capacité doit être un nombre.
-        /// </summary>
-        internal static string CapaciteParsingErrorMessage {
-            get {
-                return ResourceManager.GetString("CapaciteParsingErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Le prix doit être un nombre.
-        /// </summary>
-        internal static string PrixParsingErrorMessage {
-            get {
-                return ResourceManager.GetString("PrixParsingErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Retour.
-        /// </summary>
-        internal static string Retour {
-            get {
-                return ResourceManager.GetString("Retour", resourceCulture);
+                return ResourceManager.GetString("Titre", resourceCulture);
             }
         }
     }

@@ -1,6 +1,7 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Snowfall.Application.Mappings;
 using Snowfall.Web.Admin;
 using Snowfall.Web.Admin.Configurations;
 
@@ -13,6 +14,13 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.EnregistrerServices();
 // Localization
 builder.Services.AddLocalization();
+// Blazor Bootstrap
+builder.Services.AddBlazorBootstrap();
+// AutoMapper
+builder.Services.AddAutoMapper(cfg => 
+{
+    cfg.AddProfile<AutoMapperConfig>(); 
+});
 /* -------------------------------- */
 
 var culture = new CultureInfo("fr");

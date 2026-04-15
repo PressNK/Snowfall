@@ -1,0 +1,97 @@
+﻿@page "/evenements/{id:int}/edit"
+@using AutoMapper
+@using Microsoft.Extensions.Localization
+@using Snowfall.Application.Dtos.Evenements
+@using Snowfall.Web.Admin.HttpClients
+@using Snowfall.Web.Admin.Resources
+@inject IStringLocalizer<Resources.Evenements.Edit> Localizer;
+@inject IStringLocalizer<SharedResources> LocalizerShared;
+@inject EvenementHttpClient EvenementHttpClient
+@inject VilleHttpClient VilleHttpClient
+@inject IMapper Mapper
+@inject NavigationManager NavigationManager
+
+<h1>@Localizer["Titre"]</h1>
+
+@if (_evenementDto == null)
+{
+    <p>Chargement...</p>
+}
+else
+{
+    <div class="col-lg-6">
+        <EditForm Model="_modifierEvenementDto" OnValidSubmit="GererSubmit">
+            <DataAnnotationsValidator />
+            
+            <div class="form-floating mb-3">
+                <InputText id="nom" class="form-control" placeholder="Nom" @bind-Value="_modifierEvenementDto.Nom"/>
+                <label asp-for="nom">Nom</label>
+                <ValidationMessage class="invalid-feedback" For="@(() => _modifierEvenementDto.Nom)" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputTextArea id="description" rows="5" class="form-control" placeholder="Description" @bind-Value="_modifierEvenementDto.Description"/>
+                <label asp-for="description">Description</label>
+                <ValidationMessage class="invalid-feedback" For="@(() => _modifierEvenementDto.Description)" />
+            </div>
+
+            <div class="form-floating mb-3">
+                <InputNumber id="capacite" class="form-control" placeholder="Capacité" ParsingErrorMessage=@LocalizerShared["CapaciteParsingErrorMessage"] @bind-Value="_modifierEvenementDto.Capacite"/>
+                <label asp-for="capacite">Capacité</label>
+                <ValidationMessage class="invalid-feedback" For="@(() => _modifierEvenementDto.Capacite)" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputDate id="date" class="form-control" placeholder="Date" @bind-Value="_modifierEvenementDto.Date"/>
+                <label asp-for="date">Date</label>
+                <ValidationMessage class="invalid-feedback" For="@(() => _modifierEvenementDto.Date)" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputNumber id="prix" class="form-control" placeholder="Prix" ParsingErrorMessage=@LocalizerShared["PrixParsingErrorMessage"] @bind-Value="_modifierEvenementDto.Prix"/>
+                <label asp-for="prix">Prix</label>
+                <ValidationMessage class="invalid-feedback" For="@(() => _modifierEvenementDto.Prix)" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputSelect id="ville" class="form-select" @bind-Value="_modifierEvenementDto.VilleId">
+                    <option value="">Veuillez faire une sélection</option>
+                    @if (_villes != null)
+                    {
+                        @foreach (var ville in _villes)
+                        {
+                            <option value="@ville.Id">@ville.Nom, @ville.PaysIso</option>
+                        }
+                    }
+                </InputSelect>
+                <label for="ville">Ville</label>
+                <ValidationMessage class="invalid-feedback" For="@(() => _modifierEvenementDto.VilleId)" />
+            </div>
+            <button type="submit" class="btn btn-primary">@LocalizerShared["Bouton_Sauvegarder"]</button>
+            <button class="btn btn-secondary" @onclick="Retour">@LocalizerShared["Bouton_Annuler"]</button>
+        </EditForm>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    
+    private EvenementDto? _evenementDto;
+    private ModifierEvenementDto _modifierEvenementDto = new();
+    private List<VilleDto>? _villes;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _villes = await VilleHttpClient.ObtenirVilles();
+        (var statusCode, _evenementDto) = await EvenementHttpClient.ObtenirEvenement(Id);
+        
+        Mapper.Map(_evenementDto, _modifierEvenementDto);
+    }
+    
+    async Task GererSubmit()
+    {
+        bool success = await EvenementHttpClient.ModifierEvenement(Id, _modifierEvenementDto);
+    }
+
+    void Retour()
+    {
+        NavigationManager.NavigateTo($"/evenements/{Id}");
+    }
+}

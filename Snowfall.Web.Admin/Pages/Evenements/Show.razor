@@ -6,8 +6,6 @@
 
 @inject EvenementHttpClient EvenementHttpClient
 
-<h3>Show</h3>
-
 @if (_evenementDto == null)
 {
     @if (!string.IsNullOrEmpty(alertMessage))
@@ -21,7 +19,11 @@
 }
 else
 {
+    <h3>@_evenementDto.Nom</h3>
     <Event Evenement="_evenementDto"></Event>
+    <div class="card-body">
+        <NavLink class="btn btn-primary" href="@($"/evenements/{Id}/edit")">Modifier</NavLink>
+    </div>
 }
 
 @code {

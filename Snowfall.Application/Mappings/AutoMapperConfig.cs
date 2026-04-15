@@ -2,7 +2,7 @@
 using Snowfall.Application.Dtos.Evenements;
 using Snowfall.Domain.Models;
 
-namespace Snowfall.Web.Api.Configurations;
+namespace Snowfall.Application.Mappings;
 
 public class AutoMapperConfig : Profile
 {
@@ -10,6 +10,7 @@ public class AutoMapperConfig : Profile
     {
         CreateMap<Evenement, EvenementDto>().ReverseMap();
         CreateMap<CreerEvenementDto, Evenement>();
+        CreateMap<EvenementDto, ModifierEvenementDto>();
         CreateMap<Ville, VilleDto>().ReverseMap();
     }
 }
