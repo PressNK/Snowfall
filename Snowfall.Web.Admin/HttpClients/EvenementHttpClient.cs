@@ -60,6 +60,20 @@ public class EvenementHttpClient
     /// <returns>Bool représentant le succès ou l'échec de la requête</returns>
     public async Task<bool> ModifierEvenement(int id, ModifierEvenementDto modifierEvenementDto)
     {
-        // Oups... à compléter!
+        var response = await _client.PatchAsJsonAsync($"{BaseApiUrl}/{id}", modifierEvenementDto);
+        return response.IsSuccessStatusCode;
+    }
+    
+    /// <summary>
+    /// Permets de supprimer un événement
+    /// </summary>
+    /// <param name="id">Le id de l'événement à supprimer</param>
+    /// <returns></returns>
+    public async Task<bool> SupprimerEvenement(int id)
+    {
+        string url = $"{BaseApiUrl}/{id}";
+        var response = await _client.DeleteAsync(url);
+
+        return response.IsSuccessStatusCode;
     }
 }

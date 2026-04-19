@@ -10,6 +10,7 @@
 @inject VilleHttpClient VilleHttpClient
 @inject IMapper Mapper
 @inject NavigationManager NavigationManager
+@inject ToastService ToastService
 
 <h1>@Localizer["Titre"]</h1>
 
@@ -88,6 +89,15 @@ else
     async Task GererSubmit()
     {
         bool success = await EvenementHttpClient.ModifierEvenement(Id, _modifierEvenementDto);
+        if (success)
+        {
+            ToastService.Notify(new(ToastType.Success, "L'événement a été modifié!"));
+            NavigationManager.NavigateTo($"/evenements/{Id}");
+        }
+        else
+        {
+            ToastService.Notify(new(ToastType.Danger, "Une erreur est survenue!"));
+        }
     }
 
     void Retour()

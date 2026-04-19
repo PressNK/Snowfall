@@ -1,4 +1,11 @@
 ﻿@using Snowfall.Application.Dtos.Evenements
+@using Snowfall.Web.Admin.HttpClients
+@inject NavigationManager NavigationManager
+@inject ToastService ToastService
+
+@inject EvenementHttpClient EvenementHttpClient
+
+<ConfirmDialog @ref="_confirmDialog" />
 
 @if (Evenement == null)
 {
@@ -9,7 +16,7 @@ else
     <div class="card shadow-sm">
         @if (!string.IsNullOrEmpty(Evenement.ImagePath))
         {
-            <img src="@Evenement.ImagePath" class="card-img-top image-evenement" alt="@Evenement.Nom" />
+            <img src="~/images/evenements/@Evenement.ImagePath" class="card-img-top image-evenement" alt="@Evenement.Nom" />
         }
         <div class="card-body">
             <h2 class="card-title fw-bold">@Evenement.Nom</h2>
@@ -61,8 +68,8 @@ else
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end gap-2">
-            <button class="btn btn-primary">✏️ Modifier</button>
-            <button class="btn btn-danger">🗑️ Supprimer</button>
+            <NavLink class="btn btn-primary" href="@($"/evenements/{@Evenement.Id}/edit")">✏️ Modifier</NavLink>
+            <NavLink class="btn btn-danger" @onclick="SupprimerEvenement">🗑️ Supprimer</NavLink>
         </div>
     </div>
 }
@@ -70,4 +77,32 @@ else
 @code {
     [Parameter]
     public EvenementDto? Evenement { get; set; }
+    private ConfirmDialog _confirmDialog;
+    
+    async Task SupprimerEvenement()
+    {
+        ConfirmDialogOptions options = new ConfirmDialogOptions
+        {
+            YesButtonText = "Confirmer",
+            NoButtonText = "Annuler"
+        };
+        bool confirmation = await _confirmDialog.ShowAsync(
+            title: "Confirmation",
+            message1: "Êtes-vous certain de vouloir supprimer cet événement?");
+        
+        if (confirmation)
+        {
+            var success = await EvenementHttpClient.SupprimerEvenement(@Evenement!.Id);
+            if (success)
+            {
+                ToastService.Notify(new(ToastType.Success, "L'événement a été supprimé!"));
+                NavigationManager.NavigateTo($"/evenements");
+            }
+            else
+            {
+                ToastService.Notify(new(ToastType.Danger, "Une erreur est survenue!"));
+                NavigationManager.NavigateTo($"/evenements/{@Evenement!.Id}");
+            }
+        }
+    }
 }

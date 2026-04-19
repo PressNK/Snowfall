@@ -3,6 +3,8 @@
 @using Snowfall.Application.Dtos.Evenements
 @using Snowfall.Web.Admin.HttpClients
 @using Snowfall.Web.Admin.Pages.Evenements.Components
+@inject NavigationManager NavigationManager
+@inject ToastService ToastService
 
 @inject EvenementHttpClient EvenementHttpClient
 
@@ -21,9 +23,6 @@ else
 {
     <h3>@_evenementDto.Nom</h3>
     <Event Evenement="_evenementDto"></Event>
-    <div class="card-body">
-        <NavLink class="btn btn-primary" href="@($"/evenements/{Id}/edit")">Modifier</NavLink>
-    </div>
 }
 
 @code {
