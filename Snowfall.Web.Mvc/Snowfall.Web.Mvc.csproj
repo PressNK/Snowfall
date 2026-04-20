@@ -90,6 +90,8 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Resources\Views\Panier\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\evenements\CS-go.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\evenements\lol.png" />
     </ItemGroup>
 
 </Project>

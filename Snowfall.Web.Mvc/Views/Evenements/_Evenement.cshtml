@@ -5,7 +5,7 @@
     <div class="card h-100">
         @if (@Model.ImagePath != null)
         {
-            <img class="card-evenement img-fluid rounded-top object-fit-cover" src="~/images/evenements/@Model.ImagePath"/>
+            <img class="card-evenement img-fluid rounded-top object-fit-cover" src="~/storage/@Model.ImagePath"/>
         }
         <div class="card-body">
             <h5 class="card-title">@Model.Nom</h5>

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.FileProviders;
 using Scalar.AspNetCore;
 using Snowfall.Application.Mappings;
 using Snowfall.Data.Configurations;
@@ -51,5 +52,12 @@ app.UseStaticFiles();
 app.UseRouting();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, builder.Configuration["DossierStorage"]!))),
+    RequestPath = "/storage"
+});
 
 app.Run();

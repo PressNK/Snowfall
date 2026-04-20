@@ -14,4 +14,28 @@
     <data name="Titre" xml:space="preserve">
         <value>Add an event</value>
     </data>
+    <data name="Capacite" xml:space="preserve">
+        <value>Capacity</value>
+    </data>
+    <data name="Date" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="Description" xml:space="preserve">
+        <value>Description</value>
+    </data>
+    <data name="Image" xml:space="preserve">
+        <value>Image</value>
+    </data>
+    <data name="Nom" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="Prix" xml:space="preserve">
+        <value>Price</value>
+    </data>
+    <data name="Selection" xml:space="preserve">
+        <value>Please, choose an option</value>
+    </data>
+    <data name="Ville" xml:space="preserve">
+        <value>City</value>
+    </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿@page "/evenements/{id:int}/edit"
+@using System.Net.Http.Headers
 @using AutoMapper
 @using Microsoft.Extensions.Localization
 @using Snowfall.Application.Dtos.Evenements
@@ -11,6 +12,7 @@
 @inject IMapper Mapper
 @inject NavigationManager NavigationManager
 @inject ToastService ToastService
+@inject UploadHttpClient UploadHttpClient;
 
 <h1>@Localizer["Titre"]</h1>
 
@@ -23,6 +25,28 @@ else
     <div class="col-lg-6">
         <EditForm Model="_modifierEvenementDto" OnValidSubmit="GererSubmit">
             <DataAnnotationsValidator />
+            
+            <div class="mb-3">
+                @if (!string.IsNullOrEmpty(_modifierEvenementDto.ImagePath) || _modifying)
+                {
+                    @if (_modifying)
+                    {
+                        <label for="image" class="form-label">@Localizer["Image"]</label>
+                        <InputFile id="image" class="form-control" accept=".jpg, .jpeg, .png" OnChange="@OnInputFileChange"/>
+                        
+                    }
+                    else
+                    {
+                        <img src="/storage/@_modifierEvenementDto.ImagePath" class="card-img-top image-evenement" alt="@_modifierEvenementDto.Nom" />
+                    }
+                }
+                <button type="button" class="btn btn-outline-danger btn-sm" @onclick="RetirerImage">
+                    <i class="bi bi-trash"></i> Retirer l'image
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="ModifierImage">
+                    <i class="bi bi-pencil"></i> Modifier l'image
+                </button>
+            </div>
             
             <div class="form-floating mb-3">
                 <InputText id="nom" class="form-control" placeholder="Nom" @bind-Value="_modifierEvenementDto.Nom"/>
@@ -77,6 +101,7 @@ else
     private EvenementDto? _evenementDto;
     private ModifierEvenementDto _modifierEvenementDto = new();
     private List<VilleDto>? _villes;
+    private bool _modifying;
     
     protected override async Task OnInitializedAsync()
     {
@@ -104,4 +129,71 @@ else
     {
         NavigationManager.NavigateTo($"/evenements/{Id}");
     }
+    
+    void RetirerImage()
+    {
+        _modifierEvenementDto.ImagePath = null;
+        _modifying = false;
+    }
+
+    void ModifierImage()
+    {
+        _modifying = true;
+    }
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        // La taille maximale acceptés pour les fichiers (5 Mo)
+        long tailleFichierMax = 1024 * 1024 * 5;
+
+        // Variable permettant de contrôler si on procède ou non au téléversement
+        bool estPretPourUpload = false;
+
+        // On crée le contenu du "formulaire" (body) envoyé
+        using var content = new MultipartFormDataContent();
+
+        try
+        {
+            // Le fichier est récupéré à partir de l'événement
+            IBrowserFile file = e.File;
+
+            // Le contenu du fichier est récupéré, avec comme limite tailleFichierMax
+            var fileContent =
+                new StreamContent(file.OpenReadStream(tailleFichierMax));
+
+            // On assigne le bon type de fichier au contenu
+            fileContent.Headers.ContentType =
+                new MediaTypeHeaderValue(file.ContentType);
+
+            // Le body de la requête qui sera envoyée
+            content.Add(
+                content: fileContent,
+                name: "\"file\"",
+                fileName: file.Name);
+
+            // Aucune erreur, on peut procéder à l'upload
+            estPretPourUpload = true;
+
+            if (estPretPourUpload)
+            {
+                // On envoie le fichier à l'API
+                var resultatUpload = await UploadHttpClient.Upload(content);
+                if (resultatUpload != null)
+                {
+                    // Si l'upload a réussi, on assigne le chemin de l'image à l'événement en cours de création
+                    _modifierEvenementDto.ImagePath = resultatUpload.NomFichier;
+                    ToastService.Notify(new(ToastType.Success, "L'image a bien été téléversée."));
+                }
+                else
+                {
+                    ToastService.Notify(new(ToastType.Danger, "Une erreur est survenue lors du téléversement de l'image."));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.Notify(new(ToastType.Danger, "Impossible de lire le fichier. Vérifiez qu'il correspond bien à la taille maximale."));
+        }
+    }
+
 }

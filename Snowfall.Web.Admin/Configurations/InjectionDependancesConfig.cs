@@ -11,6 +11,7 @@ public static class InjectionDependancesConfig
 
         services.AddScoped<EvenementHttpClient>();
         services.AddScoped<VilleHttpClient>();
+        services.AddScoped<UploadHttpClient>();
 
         return services;
     }

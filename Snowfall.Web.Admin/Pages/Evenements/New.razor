@@ -1,4 +1,5 @@
 @page "/evenements/new"
+@using System.Net.Http.Headers
 @using Microsoft.Extensions.Localization
 @using Snowfall.Application.Dtos.Evenements
 @using Snowfall.Web.Admin.HttpClients
@@ -9,6 +10,7 @@
 @inject EvenementHttpClient EvenementHttpClient;
 @inject NavigationManager NavigationManager;
 @inject ToastService ToastService
+@inject UploadHttpClient UploadHttpClient;
 
 <NavLink href="/">@LocalizerShared["Retour"]</NavLink>
 <h1>@Localizer["Titre"]</h1>
@@ -17,35 +19,40 @@
     <EditForm Model="_creerEvenementDto" OnValidSubmit="GererSubmit">
         <DataAnnotationsValidator />
         
+        <div class="mb-3">
+            <label for="image" class="form-label">@Localizer["Image"]</label>
+            <InputFile id="image" class="form-control" accept=".jpg, .jpeg, .png" OnChange="@OnInputFileChange" />
+        </div>
+        
         <div class="form-floating mb-3">
             <InputText id="nom" class="form-control" placeholder="Nom" @bind-Value="_creerEvenementDto.Nom"/>
-            <label asp-for="nom">Nom</label>
+            <label asp-for="nom">@Localizer["Nom"]</label>
             <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Nom)" />
         </div>
         <div class="form-floating mb-3">
             <InputTextArea id="description" rows="5" class="form-control" placeholder="Description" @bind-Value="_creerEvenementDto.Description"/>
-            <label asp-for="description">Description</label>
+            <label asp-for="description">@Localizer["Description"]</label>
             <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Description)" />
         </div>
 
         <div class="form-floating mb-3">
             <InputNumber id="capacite" class="form-control" placeholder="Capacité" ParsingErrorMessage=@LocalizerShared["CapaciteParsingErrorMessage"] @bind-Value="_creerEvenementDto.Capacite"/>
-            <label asp-for="capacite">Capacité</label>
+            <label asp-for="capacite">@Localizer["Capacite"]</label>
             <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Capacite)" />
         </div>
         <div class="form-floating mb-3">
             <InputDate id="date" class="form-control" placeholder="Date" @bind-Value="_creerEvenementDto.Date"/>
-            <label asp-for="date">Date</label>
+            <label asp-for="date">@Localizer["Date"]</label>
             <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Date)" />
         </div>
         <div class="form-floating mb-3">
             <InputNumber id="prix" class="form-control" placeholder="Prix" ParsingErrorMessage=@LocalizerShared["PrixParsingErrorMessage"] @bind-Value="_creerEvenementDto.Prix"/>
-            <label asp-for="prix">Prix</label>
+            <label asp-for="prix">@Localizer["Prix"]</label>
             <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.Prix)" />
         </div>
         <div class="form-floating mb-3">
             <InputSelect id="ville" class="form-select" @bind-Value="_creerEvenementDto.VilleId">
-                <option value="">Veuillez faire une sélection</option>
+                <option value="">@Localizer["Selection"]</option>
                 @if (_villes != null)
                 {
                     @foreach (var ville in _villes)
@@ -54,7 +61,7 @@
                     }
                 }
             </InputSelect>
-            <label for="ville">Ville</label>
+            <label for="ville">@Localizer["Ville"]</label>
             <ValidationMessage class="invalid-feedback" For="@(() => _creerEvenementDto.VilleId)" />
         </div>
         <button type="submit" class="btn btn-primary">@LocalizerShared["Bouton_Sauvegarder"]</button>
@@ -89,5 +96,60 @@
     void Retour()
     {
         NavigationManager.NavigateTo("/evenements");
+    }
+    
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        // La taille maximale acceptés pour les fichiers (5 Mo)
+        long tailleFichierMax = 1024 * 1024 * 5;
+    
+        // Variable permettant de contrôler si on procède ou non au téléversement
+        bool estPretPourUpload = false;
+        
+        // On crée le contenu du "formulaire" (body) envoyé
+        using var content = new MultipartFormDataContent();
+        
+        try
+        {
+            // Le fichier est récupéré à partir de l'événement
+            IBrowserFile file = e.File;
+        
+            // Le contenu du fichier est récupéré, avec comme limite tailleFichierMax
+            var fileContent = 
+                new StreamContent(file.OpenReadStream(tailleFichierMax));
+
+            // On assigne le bon type de fichier au contenu
+            fileContent.Headers.ContentType = 
+                new MediaTypeHeaderValue(file.ContentType);
+
+            // Le body de la requête qui sera envoyée
+            content.Add(
+                content: fileContent,
+                name: "\"file\"",
+                fileName: file.Name);
+
+            // Aucune erreur, on peut procéder à l'upload
+            estPretPourUpload = true;
+            
+            if (estPretPourUpload)
+            {
+                // On envoie le fichier à l'API
+                var resultatUpload = await UploadHttpClient.Upload(content);
+                if (resultatUpload != null)
+                {
+                    // Si l'upload a réussi, on assigne le chemin de l'image à l'événement en cours de création
+                    _creerEvenementDto.ImagePath = resultatUpload.NomFichier;
+                    ToastService.Notify(new(ToastType.Success, "L'image a bien été téléversée."));
+                }
+                else
+                {
+                    ToastService.Notify(new(ToastType.Danger, "Une erreur est survenue lors du téléversement de l'image."));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.Notify(new(ToastType.Danger, "Impossible de lire le fichier. Vérifiez qu'il correspond bien à la taille maximale."));
+        }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
 using Snowfall.Application.Claims;
 using Snowfall.Application.Services;
 using Snowfall.Data.Configurations;
@@ -73,6 +74,13 @@ app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Evenements}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, builder.Configuration["DossierStorage"]!))),
+    RequestPath = "/storage"
+});
 
 
 app.Run();

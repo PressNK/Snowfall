@@ -7,22 +7,22 @@
 
 <ConfirmDialog @ref="_confirmDialog" />
 
-@if (Evenement == null)
+@if (_evenementDto == null)
 {
     <p>Chargement de l'événement...</p>
 }
 else
 {
     <div class="card shadow-sm">
-        @if (!string.IsNullOrEmpty(Evenement.ImagePath))
+        @if (!string.IsNullOrEmpty(_evenementDto.ImagePath))
         {
-            <img src="~/images/evenements/@Evenement.ImagePath" class="card-img-top image-evenement" alt="@Evenement.Nom" />
+            <img src="/storage/@_evenementDto.ImagePath" class="card-img-top image-evenement" alt="@_evenementDto.Nom" />
         }
         <div class="card-body">
-            <h2 class="card-title fw-bold">@Evenement.Nom</h2>
-            @if (!string.IsNullOrEmpty(Evenement.Description))
+            <h2 class="card-title fw-bold">@_evenementDto.Nom</h2>
+            @if (!string.IsNullOrEmpty(_evenementDto.Description))
             {
-                <p class="card-text text-muted">@Evenement.Description</p>
+                <p class="card-text text-muted">@_evenementDto.Description</p>
             }
             <hr />
             <div class="row g-3">
@@ -31,7 +31,7 @@ else
                         <span class="fs-4">📅</span>
                         <div>
                             <small class="text-muted d-block">Date</small>
-                            <strong>@Evenement.Date.ToString("D")</strong>
+                            <strong>@_evenementDto.Date.ToString("D")</strong>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@ else
                         <span class="fs-4">💲</span>
                         <div>
                             <small class="text-muted d-block">Prix</small>
-                            <strong>@Evenement.Prix.ToString("C")</strong>
+                            <strong>@_evenementDto.Prix.ToString("C")</strong>
                         </div>
                     </div>
                 </div>
@@ -49,18 +49,18 @@ else
                         <span class="fs-4">👥</span>
                         <div>
                             <small class="text-muted d-block">Capacité</small>
-                            <strong>@Evenement.Capacite places</strong>
+                            <strong>@_evenementDto.Capacite places</strong>
                         </div>
                     </div>
                 </div>
-                @if (Evenement.Ville != null)
+                @if (_evenementDto.Ville != null)
                 {
                     <div class="col-md-4">
                         <div class="d-flex align-items-center gap-2">
                             <span class="fs-4">📍</span>
                             <div>
                                 <small class="text-muted d-block">Ville</small>
-                                <strong>@Evenement.Ville.Nom (@Evenement.Ville.PaysIso)</strong>
+                                <strong>@_evenementDto.Ville.Nom (@_evenementDto.Ville.PaysIso)</strong>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@ else
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end gap-2">
-            <NavLink class="btn btn-primary" href="@($"/evenements/{@Evenement.Id}/edit")">✏️ Modifier</NavLink>
+            <NavLink class="btn btn-primary" href="@($"/evenements/{_evenementDto.Id}/edit")">✏️ Modifier</NavLink>
             <NavLink class="btn btn-danger" @onclick="SupprimerEvenement">🗑️ Supprimer</NavLink>
         </div>
     </div>
@@ -76,7 +76,7 @@ else
 
 @code {
     [Parameter]
-    public EvenementDto? Evenement { get; set; }
+    public EvenementDto? _evenementDto { get; set; }
     private ConfirmDialog _confirmDialog;
     
     async Task SupprimerEvenement()
@@ -92,7 +92,7 @@ else
         
         if (confirmation)
         {
-            var success = await EvenementHttpClient.SupprimerEvenement(@Evenement!.Id);
+            var success = await EvenementHttpClient.SupprimerEvenement(_evenementDto!.Id);
             if (success)
             {
                 ToastService.Notify(new(ToastType.Success, "L'événement a été supprimé!"));
@@ -101,7 +101,7 @@ else
             else
             {
                 ToastService.Notify(new(ToastType.Danger, "Une erreur est survenue!"));
-                NavigationManager.NavigateTo($"/evenements/{@Evenement!.Id}");
+                NavigationManager.NavigateTo($"/evenements/{_evenementDto!.Id}");
             }
         }
     }

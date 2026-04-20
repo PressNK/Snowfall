@@ -60,11 +60,83 @@ namespace Snowfall.Web.Admin.Resources.Evenements {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Capacité.
+        /// </summary>
+        internal static string Capacite {
+            get {
+                return ResourceManager.GetString("Capacite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        internal static string Image {
+            get {
+                return ResourceManager.GetString("Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nom.
+        /// </summary>
+        internal static string Nom {
+            get {
+                return ResourceManager.GetString("Nom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prix.
+        /// </summary>
+        internal static string Prix {
+            get {
+                return ResourceManager.GetString("Prix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Veuillez choisir une option.
+        /// </summary>
+        internal static string Selection {
+            get {
+                return ResourceManager.GetString("Selection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ajouter un événement.
         /// </summary>
         internal static string Titre {
             get {
                 return ResourceManager.GetString("Titre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ville.
+        /// </summary>
+        internal static string Ville {
+            get {
+                return ResourceManager.GetString("Ville", resourceCulture);
             }
         }
     }
