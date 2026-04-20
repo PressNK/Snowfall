@@ -1,5 +1,5 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Snowfall.Application.Dtos.Evenements;
 using Snowfall.Application.Mappings;
@@ -8,6 +8,7 @@ using Snowfall.Domain.Models;
 
 namespace Snowfall.Web.Api.Controllers;
 
+[Authorize(Roles = "ADMIN")]
 [Route("api/[controller]")]
 [ApiController]
 public class EvenementsController : ControllerBase
@@ -22,6 +23,7 @@ public class EvenementsController : ControllerBase
     }
     
     // GET /api/evenements
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -33,6 +35,7 @@ public class EvenementsController : ControllerBase
     }
     
     // GET /api/evenements/{id}
+    [AllowAnonymous]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> Show(int id)
     {

@@ -1,7 +1,14 @@
+using System.Text;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Snowfall.Application.Mappings;
 using Snowfall.Data.Configurations;
+using Snowfall.Data.Repositories;
+using Snowfall.Domain.Models;
 using Snowfall.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +30,35 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<AutoMapperConfig>(); 
 });
+// Identity
+builder.Services.AddScoped<IRoleStore<ApplicationRole>, RoleRepository>();
+builder.Services.AddScoped<IUserStore<ApplicationUser>, UserRepository>();
+builder.Services
+    .AddIdentity<ApplicationUser, ApplicationRole>();
+
+//Authentication
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtIssuer"],
+            ValidAudience = builder.Configuration["JwtAudience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSecurityKey"])),
+        };
+    });
+// LocalStorage
+builder.Services.AddBlazoredLocalStorage();
 
 /* --------------------------------- */
 
@@ -44,12 +80,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 // Blazor
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
