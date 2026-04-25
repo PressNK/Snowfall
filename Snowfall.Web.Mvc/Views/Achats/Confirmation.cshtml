@@ -1,0 +1,87 @@
+@model Snowfall.Domain.Models.Achat
+
+@{
+    ViewBag.Title = "Confirmation de commande";
+    Layout = "_Layout";
+}
+
+<div class="text-center mb-5">
+    <div class="display-1 text-success mb-3">✓</div>
+    <h2>Merci pour votre achat!</h2>
+    <p class="text-muted">Commande #@Model.Id — @Model.CreatedAt.ToString("D")</p>
+</div>
+
+<div class="row g-4 justify-content-center">
+    <!-- Informations de livraison -->
+    @if (Model.Utilisateur != null)
+    {
+        <div class="col-md-5">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">Livraison</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>@Model.Utilisateur.Prenom @Model.Utilisateur.Nom</strong></p>
+                    <p class="mb-1">@Model.Utilisateur.Email</p>
+                    @if (Model.Utilisateur.InformationClient != null)
+                    {
+                        <p class="mb-1">@Model.Utilisateur.InformationClient.Adresse</p>
+                        <p class="mb-1">@Model.Utilisateur.InformationClient.Ville, @Model.Utilisateur.InformationClient.Province &nbsp; @Model.Utilisateur.InformationClient.CodePostal</p>
+                        <p class="mb-0">@Model.Utilisateur.InformationClient.Pays</p>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Détail de la facture -->
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Détail de la facture</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Événement</th>
+                            <th class="text-center">Qté</th>
+                            <th class="text-end">Prix unit.</th>
+                            <th class="text-end">Sous-total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ligne in Model.LignesAchat ?? [])
+                        {
+                            <tr>
+                                <td>@ligne.Evenement?.Nom</td>
+                                <td class="text-center">@ligne.Quantite</td>
+                                <td class="text-end">@ligne.PrixUnitaire.ToString("C")</td>
+                                <td class="text-end">@((ligne.PrixUnitaire * ligne.Quantite).ToString("C"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Sous-total</strong></td>
+                            <td class="text-end">@Model.SousTotal.ToString("C")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Livraison</strong></td>
+                            <td class="text-end">@(Model.Livraison == 0 ? "Gratuite" : Model.Livraison.ToString("C"))</td>
+                        </tr>
+                        <tr class="table-success">
+                            <td colspan="3" class="text-end"><strong>Total payé</strong></td>
+                            <td class="text-end"><strong>@Model.Total.ToString("C")</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-controller="Evenements" asp-action="Index" class="btn btn-primary">Retour aux événements</a>
+</div>
+

@@ -11,6 +11,12 @@
     <partial name="_PanierItem" model="panierItem"/>
 }
 
-<form asp-controller="Panier" asp-action="Delete">
-    <button class="btn btn-primary mt-5">Vider le panier</button>
-</form>
+<div class="d-flex gap-2 mt-4">
+    @if (Context.Session.GetString("panier") != null)
+    {
+        <a asp-controller="Achats" asp-action="Checkout" class="btn btn-success">Passer à la caisse</a>
+    }
+    <form asp-controller="Panier" asp-action="Delete">
+        <button type="submit" class="btn btn-outline-danger">Vider le panier</button>
+    </form>
+</div>

@@ -18,15 +18,16 @@ public static class ConfigInjectionDependances
         services.AddScoped<IVilleRepository, VilleRepository>();
         services.AddScoped<IQuestionRepository, QuestionRepository>();
         services.AddScoped<ICommentaireRepository, CommentaireRepository>();
-        //services.AddScoped<IAchatRepository, AchatRepository>();
+        services.AddScoped<IAchatRepository, AchatRepository>();
+        services.AddScoped<IInformationClientRepository, InformationClientRepository>();
         
         // Application
         services.AddScoped<IEvenementService, EvenementService>();
         services.AddScoped<IVilleService, VilleService>();
         services.AddScoped<IQuestionService, QuestionService>();
         services.AddScoped<ICommentaireService, CommentaireService>();
-        //services.AddScoped<IAchatService, AchatService>();
-        //services.AddScoped<IPrixService, PrixService>();
+        services.AddScoped<IAchatService, AchatService>();
+        services.AddScoped<IInformationClientService, InformationClientService>();
 
         return services;
     }
