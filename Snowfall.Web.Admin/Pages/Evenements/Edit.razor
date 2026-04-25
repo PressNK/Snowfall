@@ -1,4 +1,7 @@
 ﻿@page "/evenements/{id:int}/edit"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "ADMIN")]
+
 @using System.Net.Http.Headers
 @using AutoMapper
 @using Microsoft.Extensions.Localization

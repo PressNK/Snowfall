@@ -1,0 +1,63 @@
+﻿@page "/connexion"
+@using Blazored.LocalStorage
+@using Microsoft.Extensions.Localization
+@using Snowfall.Application.Dtos.Auth
+@using Snowfall.Web.Admin.HttpClients
+@using Snowfall.Web.Admin.Providers
+
+@inject AuthHttpClient AuthHttpClient
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject NavigationManager NavigationManager;
+@inject IStringLocalizer<Resources.Auth.Connexion> Localizer;
+
+<div class="row">
+    <div class="col-md-8 col-lg-4 offset-md-2 offset-lg-4">
+        <h1>Connexion</h1>
+        
+        @if(!String.IsNullOrEmpty(_alertMessage))
+        {
+            <div class="alert alert-danger">@_alertMessage</div>
+        }
+
+        <EditForm Model="@_connexionDto" OnValidSubmit="@GererSubmit">
+            <DataAnnotationsValidator />
+            
+            <div class="form-floating mb-3">
+                <InputText id="email" class="form-control" type="email" placeholder="Courriel" @bind-Value="_connexionDto.Email" />
+                <label asp-for="email">Courriel</label>
+                <ValidationMessage class="invalid-feedback" For="@(() => _connexionDto.Email)" />
+            </div>
+            
+            <div class="form-floating mb-3">
+                <InputText id="password" class="form-control" type="password" placeholder="Mot de passe" @bind-Value="_connexionDto.Password" />
+                <label asp-for="password">Mot de passe</label>
+                <ValidationMessage class="invalid-feedback" For="@(() => _connexionDto.Password)" />
+            </div>
+
+            <button class="btn btn-primary" type="submit">Se connecter</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private ConnexionDto _connexionDto = new();
+    private string? _alertMessage;
+
+    async Task GererSubmit()
+    {
+        var resultatConnexionDto = await AuthHttpClient.Connexion(_connexionDto);
+
+        if (resultatConnexionDto is not null)
+        {
+            // À faire: stocker le jeton dans le localstorage
+            await LocalStorage.SetItemAsStringAsync("authToken", resultatConnexionDto.Token);
+            (AuthenticationStateProvider as ApiTokenAuthenticationStateProvider)!.RafraichirAuthenticationState();
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            _alertMessage = Localizer["Erreur.Auth"];
+        }
+    }
+}

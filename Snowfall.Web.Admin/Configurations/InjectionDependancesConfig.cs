@@ -1,4 +1,6 @@
-﻿using Snowfall.Web.Admin.HttpClients;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Snowfall.Web.Admin.HttpClients;
+using Snowfall.Web.Admin.Providers;
 
 namespace Snowfall.Web.Admin.Configurations;
 
@@ -12,6 +14,8 @@ public static class InjectionDependancesConfig
         services.AddScoped<EvenementHttpClient>();
         services.AddScoped<VilleHttpClient>();
         services.AddScoped<UploadHttpClient>();
+        services.AddScoped<AuthHttpClient>();
+        services.AddScoped<AuthenticationStateProvider, ApiTokenAuthenticationStateProvider>();
 
         return services;
     }

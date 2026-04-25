@@ -1,4 +1,7 @@
 ﻿@page "/evenements/{Id:int}"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "ADMIN")]
+
 @using System.Net
 @using Snowfall.Application.Dtos.Evenements
 @using Snowfall.Web.Admin.HttpClients

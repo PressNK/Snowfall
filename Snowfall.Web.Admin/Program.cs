@@ -1,4 +1,5 @@
 using System.Globalization;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Snowfall.Application.Mappings;
@@ -16,11 +17,15 @@ builder.Services.EnregistrerServices();
 builder.Services.AddLocalization();
 // Blazor Bootstrap
 builder.Services.AddBlazorBootstrap();
+// Local Storage
+builder.Services.AddBlazoredLocalStorage();
 // AutoMapper
 builder.Services.AddAutoMapper(cfg => 
 {
     cfg.AddProfile<AutoMapperConfig>(); 
 });
+// Authorization
+builder.Services.AddAuthorizationCore();
 /* -------------------------------- */
 
 var culture = new CultureInfo("fr");

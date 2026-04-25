@@ -1,4 +1,9 @@
-﻿<header>
+﻿@using Blazored.LocalStorage
+@using Snowfall.Web.Admin.Providers
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject ILocalStorageService LocalStorage
+
+<header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom mb-5">
         <div class="container-fluid">
             <NavLink href="" class="navbar-brand">Snowfall</NavLink>
@@ -7,12 +12,27 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <NavLink class="nav-link" ActiveClass="active" href="evenements">Gestion des événements</NavLink>
-                    </li>
-                </ul>
+                <AuthorizeView>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <NavLink class="nav-link" ActiveClass="active" href="evenements">Gestion des événements</NavLink>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="#" @onclick="Deconnexion">Déconnexion</NavLink>
+                        </li>
+                    </ul>
+                </AuthorizeView>
             </div>
         </div>
     </nav>
 </header>
+
+@code {
+    void Deconnexion()
+    {
+        LocalStorage.RemoveItemAsync("authToken");
+        (AuthenticationStateProvider as ApiTokenAuthenticationStateProvider)?.DeconnecterUtilisateur();
+    }
+}

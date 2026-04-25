@@ -1,5 +1,4 @@
 using System.Text;
-using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
@@ -57,8 +56,6 @@ builder.Services
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSecurityKey"])),
         };
     });
-// LocalStorage
-builder.Services.AddBlazoredLocalStorage();
 
 /* --------------------------------- */
 

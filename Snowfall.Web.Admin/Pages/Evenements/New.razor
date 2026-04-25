@@ -1,4 +1,7 @@
 @page "/evenements/new"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "ADMIN")]
+
 @using System.Net.Http.Headers
 @using Microsoft.Extensions.Localization
 @using Snowfall.Application.Dtos.Evenements
