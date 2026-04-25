@@ -13,12 +13,16 @@ public class CreerAchats : Migration
             .WithColumn("sous_total").AsDecimal(10, 2)
             .WithColumn("livraison").AsDecimal(10, 2)
             .WithColumn("total").AsDecimal(10, 2)
-            .WithColumn("created_at").AsDateTime();
+            .WithColumn("created_at").AsDateTime()
+            .WithColumn("statut_paiement").AsString(50).Nullable()
+            .WithColumn("stripe_session_id").AsString(255).Nullable()
+            .WithColumn("stripe_payment_intent_id").AsString(255).Nullable();
 
         Create.Table("lignes_achat")
             .WithColumn("id").AsInt64().PrimaryKey().Identity()
             .WithColumn("achat_id").AsInt64().ForeignKey("achats", "id")
             .WithColumn("evenement_id").AsInt64().ForeignKey("evenements", "id")
+            .WithColumn("evenement_nom").AsString(255)
             .WithColumn("quantite").AsInt32()
             .WithColumn("prix_unitaire").AsDecimal(10, 2);
     }

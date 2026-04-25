@@ -14,7 +14,7 @@ public class InformationClientRepository : IInformationClientRepository
         _dbContext = dbContext;
     }
 
-    public async Task<InformationClient?> FindById(string id)
+    public async Task<InformationClient?> FindByUserId(string id)
     {
         string sql = @"
             SELECT * 
@@ -23,13 +23,8 @@ public class InformationClientRepository : IInformationClientRepository
         ";
         using (IDbConnection connection = _dbContext.CreateConnection())
         {
-            var informationClient = await connection.QuerySingleOrDefaultAsync<InformationClient>(
+            return await connection.QuerySingleOrDefaultAsync<InformationClient>(
                 sql, new { Id = id });
-
-            // Comme Query retourne une liste, on récupère le premier élément
-            var resultat = informationClient;
-
-            return resultat;
         }
     }
 }

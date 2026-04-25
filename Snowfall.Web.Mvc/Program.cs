@@ -9,6 +9,8 @@ using Snowfall.Data.Context;
 using Snowfall.Data.Repositories;
 using Snowfall.Domain.Models;
 using Snowfall.Shared;
+using Stripe;
+using Stripe.Checkout;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -41,7 +43,12 @@ builder.Services.AddScoped<IUserStore<ApplicationUser>, UserRepository>();
 // Identity
 builder.Services
     .AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddClaimsPrincipalFactory<ApplicationClaimsPrincipalFactory>();;
+    .AddClaimsPrincipalFactory<ApplicationClaimsPrincipalFactory>();
+
+// Stripe
+builder.Services.AddScoped<SessionService>();
+string secretKey = builder.Configuration["Stripe:SecretKey"]!;
+StripeConfiguration.ApiKey = secretKey;
 
 // Dapper match underscores: nom_propriete_underscore <-> NomProprieteUnderscore
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;

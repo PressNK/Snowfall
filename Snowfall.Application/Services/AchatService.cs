@@ -21,5 +21,20 @@ public class AchatService : IAchatService
     {
         return await _achatRepository.FindById(id);
     }
+    
+    public async Task<Achat?> FindStripeSessionId(string id)
+    {
+        return await _achatRepository.FindStripeSessionId(id);
+    }
+    
+    public async Task<bool> MarquerCommePayer(int id, string paymentIntentId)
+    {
+        return await _achatRepository.MarquerCommePayer(id, paymentIntentId);
+    }
+    
+    public async Task<bool> MarquerCommeAnnuler(int id)
+    {
+        return await _achatRepository.MarquerCommeAnnuler(id);
+    }
 }
 

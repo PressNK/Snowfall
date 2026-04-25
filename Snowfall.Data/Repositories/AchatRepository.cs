@@ -21,8 +21,8 @@ public class AchatRepository : IAchatRepository
         try
         {
             var sqlAchat = @"
-                INSERT INTO achats (utilisateur_id, sous_total, livraison, total, created_at)
-                VALUES (@UtilisateurId, @SousTotal, @Livraison, @Total, @CreatedAt)
+                INSERT INTO achats (utilisateur_id, sous_total, livraison, total, created_at, statut_paiement, stripe_session_id)
+                VALUES (@UtilisateurId, @SousTotal, @Livraison, @Total, @CreatedAt, @StatutPaiement, @StripeSessionId)
                 RETURNING id";
 
             achat.CreatedAt = DateTime.Now;
@@ -32,8 +32,8 @@ public class AchatRepository : IAchatRepository
             {
                 ligne.AchatId = achat.Id;
                 var sqlLigne = @"
-                    INSERT INTO lignes_achat (achat_id, evenement_id, quantite, prix_unitaire)
-                    VALUES (@AchatId, @EvenementId, @Quantite, @PrixUnitaire)
+                    INSERT INTO lignes_achat (achat_id, evenement_id, quantite, prix_unitaire, evenement_nom)
+                    VALUES (@AchatId, @EvenementId, @Quantite, @PrixUnitaire, @EvenementNom)
                     RETURNING id";
                 ligne.Id = await connection.QuerySingleAsync<int>(sqlLigne, ligne, transaction: transaction);
             }
@@ -85,6 +85,48 @@ public class AchatRepository : IAchatRepository
         );
 
         return achatDict.Values.FirstOrDefault();
+    }
+    
+    public async Task<Achat?> FindStripeSessionId(string sessionId)
+    {
+        using var connection = _dbContext.CreateConnection();
+
+        var sql = @"
+            SELECT *
+            FROM achats
+            WHERE stripe_session_id = @SessionId";
+        
+        return await connection.QuerySingleOrDefaultAsync<Achat>(
+            sql, new{ SessionId = sessionId });
+    }
+    
+    public async Task<bool> MarquerCommePayer(int id, string paymentIntentId)
+    {
+        using var connection = _dbContext.CreateConnection();
+
+        var sql = @"
+            UPDATE achats SET
+                stripe_payment_intent_id = @PaymentIntentId,
+                statut_paiement =  @StatutPaiement
+            WHERE id = @Id
+            ";
+        
+        var affectedRows = await connection.ExecuteAsync(sql, new {Id = id, PaymentIntentId = paymentIntentId, StatutPaiement = StatutPaiement.Paye});
+        return affectedRows == 1;
+    }
+    
+    public async Task<bool> MarquerCommeAnnuler(int id)
+    {
+        using var connection = _dbContext.CreateConnection();
+
+        var sql = @"
+            UPDATE achats SET
+                statut_paiement =  @StatutPaiement
+            WHERE id = @Id
+            ";
+        
+        var affectedRows = await connection.ExecuteAsync(sql, new {Id = id, StatutPaiement = StatutPaiement.Annule});
+        return affectedRows == 1;
     }
 }
 

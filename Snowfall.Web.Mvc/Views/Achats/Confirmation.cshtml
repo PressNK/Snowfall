@@ -1,4 +1,4 @@
-@model Snowfall.Domain.Models.Achat
+@model Snowfall.Web.Mvc.Models.Achats.ConfirmationViewModel
 
 @{
     ViewBag.Title = "Confirmation de commande";
@@ -8,12 +8,12 @@
 <div class="text-center mb-5">
     <div class="display-1 text-success mb-3">✓</div>
     <h2>Merci pour votre achat!</h2>
-    <p class="text-muted">Commande #@Model.Id — @Model.CreatedAt.ToString("D")</p>
+    <p class="text-muted">Commande #@Model.Achat.Id — @Model.Achat.CreatedAt.ToString("D")</p>
 </div>
 
 <div class="row g-4 justify-content-center">
     <!-- Informations de livraison -->
-    @if (Model.Utilisateur != null)
+    @if (Model.Achat.Utilisateur != null)
     {
         <div class="col-md-5">
             <div class="card h-100">
@@ -21,14 +21,11 @@
                     <h5 class="mb-0">Livraison</h5>
                 </div>
                 <div class="card-body">
-                    <p><strong>@Model.Utilisateur.Prenom @Model.Utilisateur.Nom</strong></p>
-                    <p class="mb-1">@Model.Utilisateur.Email</p>
-                    @if (Model.Utilisateur.InformationClient != null)
-                    {
-                        <p class="mb-1">@Model.Utilisateur.InformationClient.Adresse</p>
-                        <p class="mb-1">@Model.Utilisateur.InformationClient.Ville, @Model.Utilisateur.InformationClient.Province &nbsp; @Model.Utilisateur.InformationClient.CodePostal</p>
-                        <p class="mb-0">@Model.Utilisateur.InformationClient.Pays</p>
-                    }
+                    <p><strong>@Model.Achat.Utilisateur.Prenom @Model.Achat.Utilisateur.Nom</strong></p>
+                    <p class="mb-1">@Model.Achat.Utilisateur.Email</p>
+                    <p class="mb-1">@Model.InformationClient.Adresse</p>
+                    <p class="mb-1">@Model.InformationClient.Ville, @Model.InformationClient.Province &nbsp; @Model.InformationClient.CodePostal</p>
+                    <p class="mb-0">@Model.InformationClient.Pays</p>
                 </div>
             </div>
         </div>
@@ -51,7 +48,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var ligne in Model.LignesAchat ?? [])
+                        @foreach (var ligne in Model.Achat.LignesAchat ?? [])
                         {
                             <tr>
                                 <td>@ligne.Evenement?.Nom</td>
@@ -64,15 +61,15 @@
                     <tfoot class="table-light">
                         <tr>
                             <td colspan="3" class="text-end"><strong>Sous-total</strong></td>
-                            <td class="text-end">@Model.SousTotal.ToString("C")</td>
+                            <td class="text-end">@Model.Achat.SousTotal.ToString("C")</td>
                         </tr>
                         <tr>
                             <td colspan="3" class="text-end"><strong>Livraison</strong></td>
-                            <td class="text-end">@(Model.Livraison == 0 ? "Gratuite" : Model.Livraison.ToString("C"))</td>
+                            <td class="text-end">@(Model.Achat.Livraison == 0 ? "Gratuite" : Model.Achat.Livraison.ToString("C"))</td>
                         </tr>
                         <tr class="table-success">
                             <td colspan="3" class="text-end"><strong>Total payé</strong></td>
-                            <td class="text-end"><strong>@Model.Total.ToString("C")</strong></td>
+                            <td class="text-end"><strong>@Model.Achat.Total.ToString("C")</strong></td>
                         </tr>
                     </tfoot>
                 </table>

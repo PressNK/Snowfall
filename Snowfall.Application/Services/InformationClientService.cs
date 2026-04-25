@@ -12,8 +12,8 @@ public class InformationClientService : IInformationClientService
         _informationClientRepository = informationClientRepository;
     }
 
-    public async Task<InformationClient?> FindById(string id)
+    public async Task<InformationClient?> FindByUserId(string id)
     {
-        return await _informationClientRepository.FindById(id);
+        return await _informationClientRepository.FindByUserId(id);
     }
 }

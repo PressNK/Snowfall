@@ -10,5 +10,8 @@ public class Achat
     public decimal Total { get; set; }
     public ApplicationUser? Utilisateur { get; set; }
     public List<LigneAchat>? LignesAchat { get; set; }
+    public string? StatutPaiement { get; set; }
+    public string? StripeSessionId { get; set; }
+    public string? StripePaymentIntentId { get; set; }
 }
 

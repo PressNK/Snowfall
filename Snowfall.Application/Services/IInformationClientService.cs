@@ -4,5 +4,5 @@ namespace Snowfall.Application.Services;
 
 public interface IInformationClientService
 {
-    Task<InformationClient?> FindById(string id);
+    Task<InformationClient?> FindByUserId(string id);
 }

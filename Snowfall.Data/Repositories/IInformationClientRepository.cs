@@ -4,5 +4,5 @@ namespace Snowfall.Data.Repositories;
 
 public interface IInformationClientRepository
 {
-    Task<InformationClient?> FindById(string id);
+    Task<InformationClient?> FindByUserId(string id);
 }
