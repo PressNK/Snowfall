@@ -21,4 +21,7 @@
     <data name="Erreur.Auth" xml:space="preserve">
         <value>Mauvaise combinaison de courriel et mot de passe</value>
     </data>
+    <data name="Titre" xml:space="preserve">
+        <value>Connexion</value>
+    </data>
 </root>

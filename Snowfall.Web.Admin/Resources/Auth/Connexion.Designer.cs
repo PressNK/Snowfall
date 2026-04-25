@@ -67,5 +67,14 @@ namespace Snowfall.Web.Admin.Resources.Auth {
                 return ResourceManager.GetString("Erreur.Auth", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connexion.
+        /// </summary>
+        internal static string Titre {
+            get {
+                return ResourceManager.GetString("Titre", resourceCulture);
+            }
+        }
     }
 }

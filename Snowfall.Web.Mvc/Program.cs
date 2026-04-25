@@ -1,4 +1,6 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.FileProviders;
 using Snowfall.Application.Claims;
 using Snowfall.Application.Services;
@@ -12,6 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new List<CultureInfo> { new CultureInfo("fr"), new CultureInfo("en") };
+    options.DefaultRequestCulture = new RequestCulture("fr");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
 
 // Add services to the container.
 builder.Services
@@ -55,14 +64,7 @@ app.UseHttpsRedirection();
 app.UseHttpMethodOverride(new() { FormFieldName = "_method" });
 app.UseRouting();
 
-var supportedCultures = new[] { "fr", "en" };
-var localizationOptions = new RequestLocalizationOptions()
-    .SetDefaultCulture("fr")
-    .AddSupportedCultures(supportedCultures)
-    .AddSupportedUICultures(supportedCultures);
-
-localizationOptions.RequestCultureProviders.Clear();
-app.UseRequestLocalization(localizationOptions);
+app.UseRequestLocalization();
 
 app.UseSession();
 

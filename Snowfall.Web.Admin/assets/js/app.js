@@ -6,3 +6,7 @@ import '../scss/app.scss'
 // Importation du JavaScript de Bootstrap
 import * as bootstrap from 'bootstrap'
 window.bootstrap = bootstrap;
+window.blazorCulture = {
+    get: () => window.localStorage['BlazorCulture'],
+    set: (value) => window.localStorage['BlazorCulture'] = value
+};

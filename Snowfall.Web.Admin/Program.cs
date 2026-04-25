@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.JSInterop;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -28,8 +29,24 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddAuthorizationCore();
 /* -------------------------------- */
 
-var culture = new CultureInfo("fr");
+builder.Services.AddLocalization();
+
+var host = builder.Build();
+
+const string defaultCulture = "fr";
+
+var js = host.Services.GetRequiredService<IJSRuntime>();
+var result = await js.InvokeAsync<string>("blazorCulture.get");
+var culture = CultureInfo.GetCultureInfo(result ?? defaultCulture);
+
+if (result == null)
+{
+    await js.InvokeVoidAsync("blazorCulture.set", defaultCulture);
+}
+
 CultureInfo.DefaultThreadCurrentCulture = culture;
 CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-await builder.Build().RunAsync();
+await host.RunAsync();
+
+//await builder.Build().RunAsync();

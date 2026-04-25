@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@inject IOptions<RequestLocalizationOptions> requestLocalizationOptions
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var supportedUiCultures = requestLocalizationOptions.Value.SupportedUICultures;
+    var urlRetour = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+        @requestCulture?.RequestCulture.UICulture.Name.ToUpper()
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+        @foreach (var culture in supportedUiCultures)
+        {
+            <li>
+                <form asp-controller="Locale"
+                      asp-action="Update" 
+                      asp-route-culture="@culture.Name" 
+                      asp-route-urlRetour="@urlRetour" 
+                      class="dropdown-item">
+                    <input type="hidden" name="_method" value="PATCH"/>
+                    
+                    <button class="dropdown-item">@culture.Name.ToUpper()</button>
+                </form>
+            </li>
+        }
+    </ul>
+</li>
