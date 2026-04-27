@@ -7,4 +7,5 @@ public interface IVilleRepository
     Task<List<Ville>> GetAll();
 
     Task<Ville?> FindById(int id);
+    Task<Ville> Create(Ville ville);
 }

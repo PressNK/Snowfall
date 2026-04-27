@@ -94,3 +94,8 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 app.Run();
+
+namespace Snowfall.Web.Api
+{
+    public partial class Program { }   
+}

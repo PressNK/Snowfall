@@ -44,4 +44,20 @@ public class VilleRepository : IVilleRepository
             return ville;
         }
     }
+    
+    public async Task<Ville> Create(Ville ville)
+    {
+        string sql = @"
+            INSERT INTO villes (nom, pays_iso)
+            VALUES (@Nom, @PaysIso)
+            RETURNING id;
+        ";
+        
+        using (IDbConnection connection = _dbContext.CreateConnection())
+        {
+            var id = await connection.QuerySingleAsync<int>(sql, ville);
+            ville.Id = id;
+            return ville;
+        }
+    }
 }
